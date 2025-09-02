@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Hojas Carta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" xintegrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .modal {
+            transition: all 0.3s ease-in-out;
+        }
+        .modal-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-inactive {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col h-screen">
+
+    <!-- Modal para mensajes -->
+    <div id="message-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 modal-inactive">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+            <p id="modal-message" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <div id="modal-buttons" class="flex flex-col gap-2">
+                <button onclick="hideModal()" class="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 transition">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Encabezado simplificado para móvil -->
+    <header class="flex items-center justify-between bg-green-900 text-white px-4 py-2 shadow-md rounded-b-md">
+        <div class="flex items-center space-x-3">
+            <img src="logo.png" alt="PEDRiiXD ALVEZ Logo" class="h-10 w-auto rounded-full">
+            <span class="font-bold text-xl select-none">PEDRiiXD ALVEZ</span>
+        </div>
+        <nav class="flex items-center space-x-3">
+            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded hover:bg-green-700 transition text-xl">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/543755298440" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="p-3 rounded hover:bg-green-700 transition text-xl">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </nav>
+    </header>
+
+    <div class="flex flex-col flex-1 p-2 md:p-4">
+        <!-- Editor principal -->
+        <div class="flex-1 flex flex-col items-center bg-gray-200 rounded-lg shadow-inner">
+            <!-- Nueva descripción sobre cómo exportar -->
+            <div class="text-center p-2">
+                <p class="text-lg text-gray-700">¡Genial! Una vez que tu plancha esté terminada, haz clic en "Descargar y enviar" para obtener el archivo. Después, puedes usar el botón de WhatsApp para enviarlo.</p>
+            </div>
+            
+            <div id="canvas-container" class="flex-1 flex items-center justify-center w-full">
+                <canvas id="canvas" class="page-shadow border-4 border-cyan-400"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de acción en la parte inferior, con nuevo color y sombra -->
+    <footer class="grid grid-cols-2 md:grid-cols-5 gap-2 bg-green-900 p-2 md:p-4 rounded-t-md shadow-inner text-white">
+        <button id="exportPdfBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+            <i class="fa-solid fa-file-pdf"></i>
+            Descargar y enviar
+        </button>
+        <label for="upload-images" class="flex items-center gap-1 cursor-pointer bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition select-none shadow-md">
+            <i class="fa-solid fa-image"></i>
+            Subir imágenes
+            <input id="upload-images" type="file" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
+        </label>
+        <button id="addTextBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+            <i class="fa-solid fa-font"></i>
+            Añadir Texto
+        </button>
+        <button id="clearPageBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+            <i class="fa-solid fa-trash-can"></i>
+            Limpiar página
+        </button>
+        <button id="deleteSelectionBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+            <i class="fa-solid fa-times"></i>
+            Eliminar selección
+        </button>
+    </footer>
+
+    <script>
+        // Funciones del modal
+        function showModal(message, showWhatsappButton = false) {
+            const modal = document.getElementById('message-modal');
+            const modalMessage = document.getElementById('modal-message');
+            const modalButtons = document.getElementById('modal-buttons');
+
+            modalMessage.textContent = message;
+            modalButtons.innerHTML = ''; // Limpiar botones anteriores
+
+            // Botón de cerrar
+            const closeBtn = document.createElement('button');
+            closeBtn.onclick = hideModal;
+            closeBtn.className = "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition";
+            closeBtn.textContent = "Cerrar";
+            modalButtons.appendChild(closeBtn);
+
+            // Botón de WhatsApp
+            if (showWhatsappButton) {
+                const waBtn = document.createElement('a');
+                const encodedMessage = encodeURIComponent("hola😊, queria solicitarte esta plancha");
+                waBtn.href = `https://wa.me/543755298440?text=${encodedMessage}`;
+                waBtn.target = "_blank";
+                waBtn.className = "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition flex items-center justify-center gap-2";
+                waBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp';
+                modalButtons.insertBefore(waBtn, modalButtons.firstChild);
+            }
+            
+            modal.classList.add('modal-active');
+            modal.classList.remove('modal-inactive');
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('message-modal');
+            modal.classList.remove('modal-active');
+            modal.classList.add('modal-inactive');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const LETTER_ASPECT_RATIO = 215.9 / 279.4;
+            const DPI = 96; // Standard DPI for web
+            const MM_IN_INCH = 25.4;
+            
+            let canvas, pages = [], currentPageIndex = 0;
+            const canvasContainer = document.getElementById('canvas-container');
+            const addTextBtn = document.getElementById('addTextBtn');
+            const loadProjectInput = document.getElementById('loadProjectInput');
+
+            // Inicializar Fabric.js
+            canvas = new fabric.Canvas('canvas');
+            let dimensionText = null;
+
+            // Establecer el fondo del canvas en blanco
+            canvas.setBackgroundColor('#FFFFFF', canvas.renderAll.bind(canvas));
+
+            // Ajustar el tamaño del canvas al contenedor
+            // El canvas se ajusta dinámicamente para ocupar el máximo espacio disponible
+            // mientras mantiene las proporciones de una hoja carta (215.9 x 279.4 mm).
+            function resizeCanvas() {
+                const containerWidth = canvasContainer.clientWidth;
+                const containerHeight = canvasContainer.clientHeight;
+                let newWidth, newHeight;
+                
+                // Calcula el ancho y alto máximos manteniendo la proporción de una hoja carta
+                const containerAspectRatio = containerWidth / containerHeight;
+                if (containerAspectRatio > LETTER_ASPECT_RATIO) {
+                    newHeight = containerHeight;
+                    newWidth = newHeight * LETTER_ASPECT_RATIO;
+                } else {
+                    newWidth = containerWidth;
+                    newHeight = newWidth / LETTER_ASPECT_RATIO;
+                }
+                
+                // Calcula el zoom para que el canvas llene el contenedor sin desbordarse
+                const zoom = newWidth / (215.9 * DPI / MM_IN_INCH); 
+                canvas.setDimensions({ width: newWidth, height: newHeight });
+                canvas.setZoom(zoom);
+                canvas.renderAll();
+            }
+
+            // Renderizar la página actual en el lienzo
+            function renderCurrentPage() {
+                if (pages.length === 0) {
+                    pages.push({ id: crypto.randomUUID(), objects: [] });
+                    currentPageIndex = 0;
+                }
+                canvas.clear();
+                const page = pages[currentPageIndex];
+                if (page.objects && page.objects.length > 0) {
+                    fabric.util.enlivenObjects(page.objects, (objs) => {
+                        canvas.add(...objs);
+                        canvas.renderAll();
+                    });
+                }
+                resizeCanvas(); 
+            }
+
+            // Manejar la adición de imágenes, ahora escalando el tamaño y poniéndolas encima
+            function addImageToCanvas(url) {
+                fabric.Image.fromURL(url, (img) => {
+                    const canvasCenter = canvas.getCenter();
+                    
+                    // Escalar la imagen si es demasiado grande
+                    const maxImgWidth = canvas.getWidth() * 0.7;
+                    const maxImgHeight = canvas.getHeight() * 0.7;
+
+                    if (img.width > maxImgWidth || img.height > maxImgHeight) {
+                        if (img.width / maxImgWidth > img.height / maxImgHeight) {
+                            img.scaleToWidth(maxImgWidth);
+                        } else {
+                            img.scaleToHeight(maxImgHeight);
+                        }
+                    }
+
+                    img.set({
+                        left: canvasCenter.left,
+                        top: canvasCenter.top,
+                        originX: 'center',
+                        originY: 'center',
+                    });
+                    canvas.add(img);
+                    canvas.bringToFront(img);
+                    canvas.renderAll();
+
+                    // Forzar la actualización del estado para guardar el orden de las capas
+                    pages[currentPageIndex].objects = canvas.toJSON().objects;
+                });
+            }
+
+            // Event Listeners
+            document.getElementById('upload-images').addEventListener('change', (e) => {
+                const files = e.target.files;
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const url = event.target.result;
+                        addImageToCanvas(url);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            document.getElementById('clearPageBtn').addEventListener('click', () => {
+                canvas.clear();
+                pages[currentPageIndex].objects = [];
+                canvas.renderAll();
+            });
+
+            document.getElementById('deleteSelectionBtn').addEventListener('click', () => {
+                canvas.remove(...canvas.getActiveObjects());
+                canvas.renderAll();
+            });
+            
+            addTextBtn.addEventListener('click', () => {
+                const text = new fabric.IText('Haz clic para editar', {
+                    left: canvas.getWidth() / 2,
+                    top: canvas.getHeight() / 2,
+                    originX: 'center',
+                    originY: 'center',
+                    fontSize: 24,
+                    fontFamily: 'Inter',
+                    fill: '#000',
+                });
+                canvas.add(text);
+                canvas.setActiveObject(text);
+                canvas.renderAll();
+            });
+
+            document.getElementById('exportPdfBtn').addEventListener('click', () => {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ unit: "mm", format: "letter" });
+
+                async function exportPage(index) {
+                    if (index >= pages.length) {
+                        pdf.save("diseno.pdf");
+                        showModal("El archivo PDF se ha descargado. Ahora puedes enviarlo por WhatsApp.", true);
+                        return;
+                    }
+
+                    const pageData = pages[index];
+                    const tempCanvas = document.createElement('canvas');
+                    const tempFabricCanvas = new fabric.Canvas(tempCanvas, {
+                        width: 215.9 * DPI / MM_IN_INCH,
+                        height: 279.4 * DPI / MM_IN_INCH
+                    });
+
+                    // Establecer el fondo en blanco antes de renderizar y exportar
+                    tempFabricCanvas.setBackgroundColor('#FFFFFF', async () => {
+                        await new Promise(resolve => {
+                            fabric.util.enlivenObjects(pageData.objects, (enlived) => {
+                                enlived.forEach(o => tempFabricCanvas.add(o));
+                                resolve();
+                            });
+                        });
+    
+                        const imgData = tempFabricCanvas.toDataURL({ format: 'jpeg', quality: 1.0 });
+                        if (index > 0) pdf.addPage();
+                        pdf.addImage(imgData, "JPEG", 0, 0, 215.9, 279.4);
+    
+                        exportPage(index + 1);
+                    });
+                }
+                
+                showModal("Exportando a PDF... Por favor, espera.", false);
+                exportPage(0);
+            });
+
+            // Sincronizar cambios del lienzo con el estado
+            canvas.on('object:modified', () => {
+                pages[currentPageIndex].objects = canvas.toJSON().objects;
+            });
+            canvas.on('object:added', () => {
+                pages[currentPageIndex].objects = canvas.toJSON().objects;
+            });
+            canvas.on('object:removed', () => {
+                pages[currentPageIndex].objects = canvas.toJSON().objects;
+            });
+            
+            // Función para mostrar las medidas de un objeto
+            function showDimensionText(obj) {
+                // Remove existing text if any
+                if (dimensionText) {
+                    canvas.remove(dimensionText);
+                }
+
+                if (obj.type === 'image') {
+                    const zoom = canvas.getZoom();
+                    const widthCm = (obj.getScaledWidth() / (DPI / MM_IN_INCH) / zoom).toFixed(1);
+                    const heightCm = (obj.getScaledHeight() / (DPI / MM_IN_INCH) / zoom).toFixed(1);
+                    const dimensions = `${widthCm} x ${heightCm} cm`;
+                    
+                    dimensionText = new fabric.Text(dimensions, {
+                        fontSize: 14,
+                        fill: '#FFFFFF',
+                        backgroundColor: '#333333',
+                        padding: 5,
+                        selectable: false,
+                        evented: false,
+                    });
+                    
+                    canvas.add(dimensionText);
+                    updateDimensionTextPosition(obj);
+                }
+            }
+            
+            // Función para actualizar la posición del texto de medidas
+            function updateDimensionTextPosition(obj) {
+                if (dimensionText) {
+                    const objCenter = obj.getCenterPoint();
+                    dimensionText.set({
+                        left: objCenter.x,
+                        top: obj.top - dimensionText.height / 2 - 10,
+                        originX: 'center',
+                    });
+                    canvas.renderAll();
+                }
+            }
+
+            // Ocultar las medidas
+            function hideDimensionText() {
+                if (dimensionText) {
+                    canvas.remove(dimensionText);
+                    dimensionText = null;
+                    canvas.renderAll();
+                }
+            }
+
+            // Eventos para mostrar y ocultar las medidas
+            canvas.on('object:scaling', (e) => showDimensionText(e.target));
+            canvas.on('object:moving', (e) => showDimensionText(e.target));
+            canvas.on('mouse:down', (e) => {
+                if (!e.target || e.target.type !== 'image') {
+                    hideDimensionText();
+                }
+            });
+            canvas.on('object:modified', hideDimensionText);
+            canvas.on('selection:cleared', hideDimensionText);
+            canvas.on('object:removed', hideDimensionText);
+            
+            // Inicialización de la aplicación
+            pages = [{ id: crypto.randomUUID(), objects: [] }];
+            resizeCanvas();
+            renderCurrentPage();
+
+            window.addEventListener('resize', resizeCanvas);
+        });
+    </script>
+</body>
+</html>

@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" xintegrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" xintegrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
@@ -50,7 +50,9 @@
                 <i class="fa-solid fa-folder-open text-white"></i>
                 <span class="font-semibold text-white">Galería</span>
             </a>
-            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded hover:bg-emerald-400 transition text-xl">
+            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" 
+               class="p-4 rounded-lg bg-gradient-to-tr from-yellow-300 via-pink-500 to-purple-600 text-white shadow-lg 
+                      hover:scale-110 transition-transform duration-300 text-2xl font-semibold">
                 <i class="fa-brands fa-instagram"></i>
             </a>
         </nav>
@@ -163,11 +165,13 @@
 
     <script>
         // Funciones del modal
-        function showModal(message) {
+        function showModal(message, buttonsHtml = '<button onclick="hideModal()" class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition">Cerrar</button>') {
             const modal = document.getElementById('message-modal');
             const modalMessage = document.getElementById('modal-message');
+            const modalButtons = document.getElementById('modal-buttons');
 
-            modalMessage.textContent = message;
+            modalMessage.innerHTML = message;
+            modalButtons.innerHTML = buttonsHtml;
             
             modal.classList.add('modal-active');
             modal.classList.remove('modal-inactive');
@@ -184,9 +188,11 @@
             const A4_ASPECT_RATIO = 210 / 297;
             const A4_WIDTH_MM = 210;
             const A4_HEIGHT_MM = 297;
-            const DPI = 96; // Standard DPI for web
+            const DPI = 300; // High DPI for printing
             const MM_IN_INCH = 25.4;
-            
+            const EXPORT_WIDTH_PX = Math.round((A4_WIDTH_MM * DPI) / MM_IN_INCH);
+            const EXPORT_HEIGHT_PX = Math.round((A4_HEIGHT_MM * DPI) / MM_IN_INCH);
+
             let canvas, pages = [], currentPageIndex = 0;
             const canvasContainer = document.getElementById('canvas-container');
             const addTextBtn = document.getElementById('addTextBtn');
@@ -219,7 +225,6 @@
                 const containerHeight = canvasContainer.clientHeight;
                 let newWidth, newHeight;
                 
-                // Calcula el ancho y alto máximos manteniendo la proporción de una hoja A4
                 const containerAspectRatio = containerWidth / containerHeight;
                 if (containerAspectRatio > A4_ASPECT_RATIO) {
                     newHeight = containerHeight;
@@ -229,10 +234,8 @@
                     newHeight = newWidth / A4_ASPECT_RATIO;
                 }
                 
-                // Calcula el zoom para que el canvas llene el contenedor sin desbordarse
-                const zoom = newWidth / (A4_WIDTH_MM * DPI / MM_IN_INCH); 
                 canvas.setDimensions({ width: newWidth, height: newHeight });
-                canvas.setZoom(zoom);
+                canvas.setZoom(newWidth / EXPORT_WIDTH_PX);
                 canvas.renderAll();
             }
 
@@ -243,6 +246,21 @@
                     currentPageIndex = 0;
                 }
                 canvas.clear();
+                
+                // Add the white background rectangle first
+                const whiteBackground = new fabric.Rect({
+                    left: 0,
+                    top: 0,
+                    fill: '#FFFFFF',
+                    width: EXPORT_WIDTH_PX,
+                    height: EXPORT_HEIGHT_PX,
+                    selectable: false,
+                    evented: false,
+                    excludeFromExport: true // This is just a safeguard, the color option on toDataURL is now the main solution
+                });
+                canvas.add(whiteBackground);
+                canvas.sendToBack(whiteBackground);
+
                 const page = pages[currentPageIndex];
                 if (page.objects && page.objects.length > 0) {
                     fabric.util.enlivenObjects(page.objects, (objs) => {
@@ -253,34 +271,22 @@
                 resizeCanvas(); 
             }
 
-            // Manejar la adición de imágenes, ahora escalando el tamaño y poniéndolas encima
+            // Manejar la adición de imágenes, ahora con un tamaño inicial GIGANTE
             function addImageToCanvas(url) {
                 fabric.Image.fromURL(url, (img) => {
-                    const canvasCenter = canvas.getCenter();
-                    
-                    // Escalar la imagen si es demasiado grande
-                    const maxImgWidth = canvas.getWidth() * 0.7;
-                    const maxImgHeight = canvas.getHeight() * 0.7;
-
-                    if (img.width > maxImgWidth || img.height > maxImgHeight) {
-                        if (img.width / maxImgWidth > img.height / maxImgHeight) {
-                            img.scaleToWidth(maxImgWidth);
-                        } else {
-                            img.scaleToHeight(maxImgHeight);
-                        }
-                    }
+                    // Nuevo escalado: ajustar la imagen a un 300% del ancho del lienzo.
+                    img.scaleToWidth(canvas.getWidth() * 3);
 
                     img.set({
-                        left: canvasCenter.left,
-                        top: canvasCenter.top,
+                        left: canvas.getWidth() / 2,
+                        top: canvas.getHeight() / 2,
                         originX: 'center',
                         originY: 'center',
                     });
                     canvas.add(img);
-                    canvas.setActiveObject(img); // Seleccionar automáticamente la imagen
+                    canvas.setActiveObject(img);
                     canvas.renderAll();
 
-                    // Forzar la actualización del estado para guardar el orden de las capas
                     pages[currentPageIndex].objects = canvas.toJSON().objects;
                 });
             }
@@ -300,6 +306,20 @@
 
             document.getElementById('clearPageBtn').addEventListener('click', () => {
                 canvas.clear();
+                // Re-add the white background after clearing
+                const whiteBackground = new fabric.Rect({
+                    left: 0,
+                    top: 0,
+                    fill: '#FFFFFF',
+                    width: EXPORT_WIDTH_PX,
+                    height: EXPORT_HEIGHT_PX,
+                    selectable: false,
+                    evented: false,
+                    excludeFromExport: true // This is just a safeguard
+                });
+                canvas.add(whiteBackground);
+                canvas.sendToBack(whiteBackground);
+                
                 pages[currentPageIndex].objects = [];
                 canvas.renderAll();
             });
@@ -309,77 +329,67 @@
                 canvas.renderAll();
             });
             
-            // Lógica para añadir texto y mostrar el panel de edición
             addTextBtn.addEventListener('click', () => {
                 const text = new fabric.IText('Haz clic para editar', {
                     left: canvas.getWidth() / 2,
                     top: canvas.getHeight() / 2,
                     originX: 'center',
                     originY: 'center',
-                    fontSize: 24,
+                    fontSize: Math.round(canvas.getHeight() * 0.3), // Tamaño de fuente dinámico y ENORME
                     fontFamily: 'Inter',
                     fill: '#000',
                 });
                 canvas.add(text);
                 canvas.setActiveObject(text);
                 canvas.renderAll();
-                togglePanels(text); // Mostrar el panel de texto inmediatamente
+                togglePanels(text);
             });
 
             document.getElementById('exportPdfBtn').addEventListener('click', async () => {
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({ unit: "mm", format: "a4" });
                 
-                // Show a loading modal
                 showModal("Exportando a PDF... Por favor, espera.");
 
-                // Store original canvas state
+                // Guardar estado original
                 const originalWidth = canvas.getWidth();
                 const originalHeight = canvas.getHeight();
                 const originalZoom = canvas.getZoom();
-                const originalObjects = canvas.toJSON();
-
-                const EXPORT_DPI = 300; // High DPI for printing
-                const EXPORT_WIDTH_PX = A4_WIDTH_MM * EXPORT_DPI / MM_IN_INCH;
-                const EXPORT_HEIGHT_PX = A4_HEIGHT_MM * EXPORT_DPI / MM_IN_INCH;
 
                 try {
-                    for (let i = 0; i < pages.length; i++) {
-                        const pageData = pages[i];
-                        
-                        // Temporarily load the page into the main canvas for high-res export
-                        await new Promise(resolve => {
-                            canvas.loadFromJSON(pageData, () => {
-                                canvas.setWidth(EXPORT_WIDTH_PX);
-                                canvas.setHeight(EXPORT_HEIGHT_PX);
-                                canvas.setZoom(1); // Set zoom to 1 for 1:1 pixel export
-                                canvas.renderAll();
-                                resolve();
-                            });
-                        });
-
-                        const imgData = canvas.toDataURL({ format: 'jpeg', quality: 1.0 });
-                        
-                        if (i > 0) pdf.addPage();
-                        pdf.addImage(imgData, "JPEG", 0, 0, A4_WIDTH_MM, A4_HEIGHT_MM);
-                    }
+                    // Temporarily set canvas to high-res for export
+                    canvas.setDimensions({ width: EXPORT_WIDTH_PX, height: EXPORT_HEIGHT_PX });
+                    canvas.setZoom(1);
+                    canvas.renderAll();
                     
+                    const imgData = canvas.toDataURL({
+                        format: 'jpeg',
+                        quality: 1.0,
+                        multiplier: 1,
+                        backgroundColor: '#FFFFFF'
+                    });
+                    
+                    pdf.addImage(imgData, "JPEG", 0, 0, A4_WIDTH_MM, A4_HEIGHT_MM);
                     pdf.save("diseno.pdf");
-                    showModal("El archivo PDF se ha descargado.");
+                    
+                    hideModal();
+                    showModal('¡Tu diseño se ha descargado!<br>Ahora puedes enviarlo por WhatsApp. Solo tienes que adjuntar el archivo que acabas de descargar.',
+                        `<a href="https://wa.me/543755298440?text=${encodeURIComponent('¡Hola! Aquí te envío el diseño de STICKEAME.')}" target="_blank" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition shadow-md text-center">
+                            <i class="fa-brands fa-whatsapp mr-2"></i>Enviar por WhatsApp
+                        </a>
+                        <button onclick="hideModal()" class="bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-400 transition shadow-md">
+                            Cerrar
+                        </button>`
+                    );
 
                 } catch (e) {
                     showModal("Ocurrió un error al generar el PDF. Por favor, inténtalo de nuevo.");
                     console.error("PDF generation error:", e);
                 } finally {
                     // Restore original canvas state and size
-                    await new Promise(resolve => {
-                        canvas.loadFromJSON(originalObjects, () => {
-                            canvas.setDimensions({ width: originalWidth, height: originalHeight });
-                            canvas.setZoom(originalZoom);
-                            canvas.renderAll();
-                            resolve();
-                        });
-                    });
+                    canvas.setDimensions({ width: originalWidth, height: originalHeight });
+                    canvas.setZoom(originalZoom);
+                    canvas.renderAll();
                 }
             });
 
@@ -394,17 +404,14 @@
                 pages[currentPageIndex].objects = canvas.toJSON().objects;
             });
             
-            // Función para mostrar las medidas de un objeto
             function showDimensionText(obj) {
-                // Remove existing text if any
                 if (dimensionText) {
                     canvas.remove(dimensionText);
                 }
-
                 if (obj.type === 'image') {
                     const zoom = canvas.getZoom();
-                    const widthCm = (obj.getScaledWidth() / (DPI / MM_IN_INCH) / zoom).toFixed(1);
-                    const heightCm = (obj.getScaledHeight() / (DPI / MM_IN_INCH) / zoom).toFixed(1);
+                    const widthCm = ((obj.getScaledWidth() / zoom) * (25.4 / 96)).toFixed(1);
+                    const heightCm = ((obj.getScaledHeight() / zoom) * (25.4 / 96)).toFixed(1);
                     const dimensions = `${widthCm} x ${heightCm} cm`;
                     
                     dimensionText = new fabric.Text(dimensions, {
@@ -421,7 +428,6 @@
                 }
             }
             
-            // Función para actualizar la posición del texto de medidas
             function updateDimensionTextPosition(obj) {
                 if (dimensionText) {
                     const objCenter = obj.getCenterPoint();
@@ -434,7 +440,6 @@
                 }
             }
 
-            // Ocultar las medidas
             function hideDimensionText() {
                 if (dimensionText) {
                     canvas.remove(dimensionText);
@@ -443,7 +448,6 @@
                 }
             }
 
-            // Eventos para mostrar y ocultar las medidas
             canvas.on('object:scaling', (e) => showDimensionText(e.target));
             canvas.on('object:moving', (e) => showDimensionText(e.target));
             canvas.on('mouse:down', (e) => {
@@ -455,14 +459,12 @@
             canvas.on('selection:cleared', hideDimensionText);
             canvas.on('object:removed', hideDimensionText);
 
-            // Control de paneles de edición
             function togglePanels(obj) {
-                // Ocultar todos los paneles primero
                 textPanel.classList.add('hidden');
                 layerPanel.classList.add('hidden');
                 fontOptions.classList.add('hidden');
                 colorOptions.classList.add('hidden');
-                hideDimensionText(); // Ocultar medidas al cambiar la selección
+                hideDimensionText();
 
                 if (obj) {
                     if (obj.type === 'i-text') {
@@ -474,7 +476,6 @@
                 }
             }
 
-            // Eventos de selección para controlar la visibilidad de los paneles
             canvas.on('selection:created', (e) => togglePanels(e.target));
             canvas.on('selection:updated', (e) => togglePanels(e.target));
             canvas.on('selection:cleared', () => togglePanels(null));
@@ -491,7 +492,6 @@
                 canvas.renderAll();
             });
 
-            // Lógica para los nuevos botones de edición de texto
             fontBtn.addEventListener('click', () => {
                 const activeObject = canvas.getActiveObject();
                 if (activeObject && activeObject.type === 'i-text') {
@@ -545,7 +545,6 @@
                 }
             });
 
-            // Evento para cambiar la fuente
             document.querySelectorAll('.font-option').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const fontName = e.target.dataset.font;
@@ -558,7 +557,6 @@
                 });
             });
 
-            // Evento para cambiar el color
             document.querySelectorAll('.color-swatch').forEach(swatch => {
                 swatch.addEventListener('click', (e) => {
                     const color = e.target.dataset.color;
@@ -571,7 +569,6 @@
                 });
             });
 
-            // Lógica de botones de capas
             bringForwardBtn.addEventListener('click', () => {
                 const activeObject = canvas.getActiveObject();
                 if (activeObject && activeObject.type === 'image') {
@@ -588,7 +585,6 @@
                 }
             });
 
-            // Inicialización de la aplicación
             pages = [{ id: crypto.randomUUID(), objects: [] }];
             resizeCanvas();
             renderCurrentPage();
@@ -597,4 +593,4 @@
         });
     </script>
 </body>
-    </html>
+</html>

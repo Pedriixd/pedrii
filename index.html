@@ -78,7 +78,7 @@
                 </div>
                 <div class="flex flex-col space-y-2">
                     <button id="fontBtn" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-300 hover:bg-gray-100 transition">
-                        <i class="fa-solid fa-font mr-2"></i>Fuente
+                        <i class="fa-solid fa-font mr-2"></i>Fuentes
                     </button>
                     <div id="font-options" class="hidden flex flex-col space-y-1 p-2 bg-gray-100 rounded-md">
                         <button class="font-option text-left p-1 rounded hover:bg-gray-200" data-font="Inter">Inter</button>
@@ -105,6 +105,12 @@
                     
                     <button id="boldBtn" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-300 hover:bg-gray-100 transition">
                         <i class="fa-solid fa-bold mr-2"></i>Negrita
+                    </button>
+                    <button id="italicBtn" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-300 hover:bg-gray-100 transition">
+                        <i class="fa-solid fa-italic mr-2"></i>Cursiva
+                    </button>
+                    <button id="underlineBtn" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-300 hover:bg-gray-100 transition">
+                        <i class="fa-solid fa-underline mr-2"></i>Subrayado
                     </button>
                 </div>
             </div>
@@ -197,7 +203,8 @@
             const colorBtn = document.getElementById('colorBtn');
             const colorOptions = document.getElementById('color-options');
             const boldBtn = document.getElementById('boldBtn');
-
+            const italicBtn = document.getElementById('italicBtn');
+            const underlineBtn = document.getElementById('underlineBtn');
 
             // Inicializar Fabric.js
             canvas = new fabric.Canvas('canvas');
@@ -302,6 +309,7 @@
                 canvas.renderAll();
             });
             
+            // Lógica para añadir texto y mostrar el panel de edición
             addTextBtn.addEventListener('click', () => {
                 const text = new fabric.IText('Haz clic para editar', {
                     left: canvas.getWidth() / 2,
@@ -315,6 +323,7 @@
                 canvas.add(text);
                 canvas.setActiveObject(text);
                 canvas.renderAll();
+                togglePanels(text); // Mostrar el panel de texto inmediatamente
             });
 
             document.getElementById('exportPdfBtn').addEventListener('click', async () => {
@@ -514,6 +523,28 @@
                 }
             });
 
+            italicBtn.addEventListener('click', () => {
+                const activeObject = canvas.getActiveObject();
+                if (activeObject && activeObject.type === 'i-text') {
+                    const newStyle = activeObject.fontStyle === 'italic' ? 'normal' : 'italic';
+                    activeObject.set({ fontStyle: newStyle });
+                    canvas.renderAll();
+                } else {
+                    showModal("Por favor, selecciona un elemento de texto primero para editarlo.");
+                }
+            });
+
+            underlineBtn.addEventListener('click', () => {
+                const activeObject = canvas.getActiveObject();
+                if (activeObject && activeObject.type === 'i-text') {
+                    const newUnderline = !activeObject.underline;
+                    activeObject.set({ underline: newUnderline });
+                    canvas.renderAll();
+                } else {
+                    showModal("Por favor, selecciona un elemento de texto primero para editarlo.");
+                }
+            });
+
             // Evento para cambiar la fuente
             document.querySelectorAll('.font-option').forEach(button => {
                 button.addEventListener('click', (e) => {
@@ -566,4 +597,4 @@
         });
     </script>
 </body>
-</html>
+    </html>

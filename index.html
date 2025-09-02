@@ -24,14 +24,14 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col h-screen">
+<body class="bg-slate-50 text-gray-900 flex flex-col h-screen">
 
     <!-- Modal para mensajes -->
     <div id="message-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 modal-inactive">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="modal-message" class="text-lg font-semibold text-gray-800 mb-4"></p>
             <div id="modal-buttons" class="flex flex-col gap-2">
-                <button onclick="hideModal()" class="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 transition">
+                <button onclick="hideModal()" class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition">
                     Cerrar
                 </button>
             </div>
@@ -39,16 +39,16 @@
     </div>
 
     <!-- Encabezado simplificado para móvil -->
-    <header class="flex items-center justify-between bg-green-900 text-white px-4 py-2 shadow-md rounded-b-md">
+    <header class="flex items-center justify-between bg-emerald-300 text-gray-900 px-4 py-2 shadow-md rounded-b-md">
         <div class="flex items-center space-x-3">
             <img src="logo.png" alt="PEDRiiXD ALVEZ Logo" class="h-10 w-auto rounded-full">
             <span class="font-bold text-xl select-none">PEDRiiXD ALVEZ</span>
         </div>
         <nav class="flex items-center space-x-3">
-            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded hover:bg-green-700 transition text-xl">
+            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded hover:bg-emerald-400 transition text-xl">
                 <i class="fa-brands fa-instagram"></i>
             </a>
-            <a href="https://wa.me/543755298440" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="p-3 rounded hover:bg-green-700 transition text-xl">
+            <a href="https://wa.me/543755298440" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="p-3 rounded hover:bg-emerald-400 transition text-xl">
                 <i class="fa-brands fa-whatsapp"></i>
             </a>
         </nav>
@@ -56,38 +56,38 @@
 
     <div class="flex flex-col flex-1 p-2 md:p-4">
         <!-- Editor principal -->
-        <div class="flex-1 flex flex-col items-center bg-gray-200 rounded-lg shadow-inner">
+        <div class="flex-1 flex flex-col items-center bg-emerald-100 rounded-lg shadow-inner">
             <!-- Nueva descripción sobre cómo exportar -->
             <div class="text-center p-2">
-                <p class="text-lg text-gray-700">¡Genial! Una vez que tu plancha esté terminada, haz clic en "Descargar y enviar" para obtener el archivo. Después, puedes usar el botón de WhatsApp para enviarlo.</p>
+                <p class="text-lg text-gray-800">¡Genial! Una vez que tu plancha esté terminada, haz clic en "Descargar y enviar" para obtener el archivo. Después, puedes usar el botón de WhatsApp para enviarlo.</p>
             </div>
             
             <div id="canvas-container" class="flex-1 flex items-center justify-center w-full">
-                <canvas id="canvas" class="page-shadow border-4 border-cyan-400"></canvas>
+                <canvas id="canvas" class="shadow-2xl"></canvas>
             </div>
         </div>
     </div>
 
     <!-- Botones de acción en la parte inferior, con nuevo color y sombra -->
-    <footer class="grid grid-cols-2 md:grid-cols-5 gap-2 bg-green-900 p-2 md:p-4 rounded-t-md shadow-inner text-white">
-        <button id="exportPdfBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+    <footer class="grid grid-cols-2 md:grid-cols-5 gap-2 bg-emerald-300 p-2 md:p-4 rounded-t-md shadow-inner text-gray-900">
+        <button id="exportPdfBtn" class="flex items-center justify-center gap-1 bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded transition shadow-xl" type="button">
             <i class="fa-solid fa-file-pdf"></i>
             Descargar y enviar
         </button>
-        <label for="upload-images" class="flex items-center gap-1 cursor-pointer bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition select-none shadow-md">
+        <label for="upload-images" class="flex items-center justify-center gap-1 cursor-pointer bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded transition select-none shadow-xl">
             <i class="fa-solid fa-image"></i>
             Subir imágenes
             <input id="upload-images" type="file" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
         </label>
-        <button id="addTextBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+        <button id="addTextBtn" class="flex items-center justify-center gap-1 bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded transition shadow-xl" type="button">
             <i class="fa-solid fa-font"></i>
             Añadir Texto
         </button>
-        <button id="clearPageBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+        <button id="clearPageBtn" class="flex items-center justify-center gap-1 bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded transition shadow-xl" type="button">
             <i class="fa-solid fa-trash-can"></i>
             Limpiar página
         </button>
-        <button id="deleteSelectionBtn" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded transition shadow-md" type="button">
+        <button id="deleteSelectionBtn" class="flex items-center justify-center gap-1 bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded transition shadow-xl" type="button">
             <i class="fa-solid fa-times"></i>
             Eliminar selección
         </button>
@@ -106,7 +106,7 @@
             // Botón de cerrar
             const closeBtn = document.createElement('button');
             closeBtn.onclick = hideModal;
-            closeBtn.className = "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition";
+            closeBtn.className = "bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition";
             closeBtn.textContent = "Cerrar";
             modalButtons.appendChild(closeBtn);
 
@@ -116,7 +116,7 @@
                 const encodedMessage = encodeURIComponent("hola😊, queria solicitarte esta plancha");
                 waBtn.href = `https://wa.me/543755298440?text=${encodedMessage}`;
                 waBtn.target = "_blank";
-                waBtn.className = "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition flex items-center justify-center gap-2";
+                waBtn.className = "bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-600 transition flex items-center justify-center gap-2";
                 waBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp';
                 modalButtons.insertBefore(waBtn, modalButtons.firstChild);
             }

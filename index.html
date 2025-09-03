@@ -74,7 +74,7 @@
 <body class="flex flex-col h-screen">
 
     <!-- MODAL DE TUTORIAL (ADAPTADO AL NUEVO ESTILO) -->
-    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300 modal-inactive">
         <div class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-2xl max-w-lg w-full text-white border-t-4 border-emerald-500">
             <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-emerald-400">
                 ¡Armá tu Plancha!
@@ -207,11 +207,13 @@
             const tutorialModal = document.getElementById('tutorial-modal');
             const closeTutorialBtn = document.getElementById('close-tutorial-btn');
             const closeTutorial = () => {
-                tutorialModal.classList.add('opacity-0', 'pointer-events-none');
+                tutorialModal.classList.remove('modal-active');
+                tutorialModal.classList.add('modal-inactive');
                 localStorage.setItem('tutorialStickeameMostrado', 'true');
             };
             if (!localStorage.getItem('tutorialStickeameMostrado')) {
-                tutorialModal.classList.remove('opacity-0', 'pointer-events-none');
+                tutorialModal.classList.add('modal-active');
+                tutorialModal.classList.remove('modal-inactive');
             }
             closeTutorialBtn.addEventListener('click', closeTutorial);
 
@@ -247,7 +249,7 @@
 
             function addImageToCanvas(url) {
                 fabric.Image.fromURL(url, (img) => {
-                    img.scaleToWidth(canvas.getWidth() * 2.5); // <--- TAMAÑO DE IMAGEN AUMENTADO 300%
+                    img.scaleToWidth(canvas.getWidth() * 3.5); // <--- TAMAÑO DE IMAGEN GIGANTE
                     img.set({ left: canvas.getWidth() / 2, top: canvas.getHeight() / 2, originX: 'center', originY: 'center' });
                     canvas.add(img);
                     canvas.setActiveObject(img);
@@ -277,7 +279,7 @@
                 const text = new fabric.IText('EDITAME', {
                     left: canvas.getWidth() / 2, top: canvas.getHeight() / 2,
                     originX: 'center', originY: 'center',
-                    fontSize: Math.round(canvas.getWidth() * 1.2), // <--- TAMAÑO DE TEXTO AUMENTADO 300%
+                    fontSize: Math.round(canvas.getHeight() * 1.5), // <--- TAMAÑO DE TEXTO GIGANTE
                     fontFamily: 'Permanent Marker', fill: '#000000',
                 });
                 canvas.add(text);

@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" xintegrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
@@ -26,7 +26,38 @@
 </head>
 <body class="bg-slate-50 text-gray-900 flex flex-col h-screen">
 
-    <!-- Modal para mensajes -->
+    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 p-4 transition-opacity duration-300">
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl max-w-lg w-full text-gray-800 border-t-4 border-emerald-500">
+            
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4" style="font-family: 'Comic Neue', cursive;">
+                ¡Creá tu Plancha de Stickers! ✨
+            </h2>
+
+            <p class="text-center text-gray-600 mb-6">
+                Seguí estos simples pasos para diseñar tu plancha perfecta:
+            </p>
+
+            <ol class="list-decimal list-inside space-y-4 text-left">
+                <li>
+                    <strong class="font-semibold text-emerald-700">Elegí tus Imágenes:</strong> 
+                    Explorá la <strong class="font-semibold">Galería</strong> o usá el botón <strong class="font-semibold">"Subir imágenes"</strong> para usar tus propias fotos o diseños.
+                </li>
+                <li>
+                    <strong class="font-semibold text-emerald-700">Arrastrá y Diseñá:</strong> 
+                    Arrastrá las imágenes a la plancha blanca. ¡Podés moverlas, achicarlas, agrandarlas y ordenarlas como más te guste!
+                </li>
+                <li>
+                    <strong class="font-semibold text-emerald-700">Descargá y Envía:</strong> 
+                    Cuando termines, presioná <strong class="font-semibold">"Descargar y enviar"</strong>. Tu diseño se guardará en tu dispositivo y te llevaremos a WhatsApp para que nos lo envíes y finalices tu pedido.
+                </li>
+            </ol>
+
+            <button id="close-tutorial-btn" class="mt-8 w-full bg-emerald-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-transform transform hover:scale-105 shadow-lg">
+                ¡Entendido, a crear!
+            </button>
+
+        </div>
+    </div>
     <div id="message-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 modal-inactive">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="modal-message" class="text-lg font-semibold text-gray-800 mb-4"></p>
@@ -38,30 +69,26 @@
         </div>
     </div>
 
-    <!-- Encabezado simplificado para móvil -->
     <header class="flex items-center justify-between bg-emerald-300 text-gray-900 px-4 py-2 shadow-md rounded-b-md">
         <div class="flex items-center space-x-3">
             <img src="logo.png" alt="STICKEAME Logo" class="h-10 w-auto rounded-full">
             <span class="font-bold text-xl select-none">STICKEAME</span>
         </div>
         <nav class="flex items-center space-x-3">
-            <!-- Botón de "Galería" en la parte superior con texto -->
             <a href="https://drive.google.com/drive/folders/1ZeBNXXJZZ4RfSIYu_DnhULqT3hNFUrs5" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 px-3 py-2 rounded-md transition shadow-md">
                 <i class="fa-solid fa-folder-open text-white"></i>
                 <span class="font-semibold text-white">Galería</span>
             </a>
             <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" 
-               class="p-4 rounded-lg bg-gradient-to-tr from-yellow-300 via-pink-500 to-purple-600 text-white shadow-lg 
-                      hover:scale-110 transition-transform duration-300 text-2xl font-semibold">
+                class="p-4 rounded-lg bg-gradient-to-tr from-yellow-300 via-pink-500 to-purple-600 text-white shadow-lg 
+                       hover:scale-110 transition-transform duration-300 text-2xl font-semibold">
                 <i class="fa-brands fa-instagram"></i>
             </a>
         </nav>
     </header>
 
     <div class="flex flex-col flex-1 p-2 md:p-4">
-        <!-- Editor principal -->
         <div class="flex-1 flex flex-col md:flex-row items-stretch bg-white rounded-lg shadow-inner">
-            <!-- Nueva descripción sobre cómo exportar -->
             <div class="text-center p-2 md:hidden">
                 <p class="text-lg text-gray-800">¡Genial! Una vez que tu plancha esté terminada, haz clic en "Descargar y enviar" para obtener el archivo.</p>
             </div>
@@ -70,7 +97,6 @@
                 <canvas id="canvas" class="shadow-2xl"></canvas>
             </div>
 
-            <!-- Panel de opciones para texto -->
             <div id="text-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l border-gray-200 bg-gray-50 rounded-r-lg">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold text-gray-800">Editar Texto</h2>
@@ -117,7 +143,6 @@
                 </div>
             </div>
 
-            <!-- Nuevo panel de capas para imágenes -->
             <div id="layer-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l border-gray-200 bg-gray-50 rounded-r-lg">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold text-gray-800">Capas de Imagen</h2>
@@ -138,7 +163,6 @@
         </div>
     </div>
 
-    <!-- Botones de acción en la parte inferior, con nuevo color y sombra -->
     <footer class="grid grid-cols-2 md:grid-cols-5 gap-2 bg-emerald-300 p-2 md:p-4 rounded-t-md shadow-inner text-gray-900">
         <button id="exportPdfBtn" class="flex items-center justify-center gap-1 bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded transition shadow-xl" type="button">
             <i class="fa-solid fa-file-pdf"></i>
@@ -184,6 +208,28 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // ======================================================
+            // ==== LÓGICA PARA MOSTRAR Y OCULTAR EL TUTORIAL =====
+            // ======================================================
+            const tutorialModal = document.getElementById('tutorial-modal');
+            const closeTutorialBtn = document.getElementById('close-tutorial-btn');
+
+            // Función para cerrar el tutorial
+            const closeTutorial = () => {
+                tutorialModal.classList.add('opacity-0', 'pointer-events-none');
+                // Guardamos en la memoria del navegador que el tutorial ya se mostró
+                localStorage.setItem('tutorialStickeameMostrado', 'true');
+            };
+
+            // Si nunca se ha mostrado el tutorial, lo mostramos. Si no, lo ocultamos.
+            if (localStorage.getItem('tutorialStickeameMostrado')) {
+                tutorialModal.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            // Evento para cerrar al hacer clic en el botón
+            closeTutorialBtn.addEventListener('click', closeTutorial);
+            // =======================================================
+
             // Constantes para formato A4
             const A4_ASPECT_RATIO = 210 / 297;
             const A4_WIDTH_MM = 210;

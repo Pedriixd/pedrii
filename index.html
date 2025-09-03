@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,20 +8,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLPD7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Permanent+Marker&display=swap"
+        rel="stylesheet">
     <style>
         /* ESTILOS BASE Y NUEVA ESTÉTICA */
         :root {
             --font-graffiti: 'Permanent Marker', cursive;
             --font-body: 'Inter', sans-serif;
-            --color-accent: #10B981; /* Un verde esmeralda fachero */
+            --color-accent: #10B981;
+            /* Un verde esmeralda fachero */
             --color-dark: #1a1a1a;
         }
+
         body {
             font-family: var(--font-body);
             background-color: var(--color-dark);
@@ -28,10 +32,25 @@
             background-image: url('https://www.transparenttextures.com/patterns/concrete-wall-3.png');
             color: #f1f1f1;
         }
-        .font-graffiti { font-family: var(--font-graffiti); }
-        .modal { transition: opacity 0.3s ease-in-out; }
-        .modal-active { opacity: 1; pointer-events: auto; }
-        .modal-inactive { opacity: 0; pointer-events: none; }
+
+        .font-graffiti {
+            font-family: var(--font-graffiti);
+        }
+
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-inactive {
+            opacity: 0;
+            pointer-events: none;
+        }
+
         /* ESTILO PERSONALIZADO PARA BOTONES DE ACCIÓN */
         .action-button {
             font-family: var(--font-graffiti);
@@ -45,10 +64,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem; /* 8px */
+            gap: 0.5rem;
+            /* 8px */
             cursor: pointer;
             border: 2px solid transparent;
         }
+
         .action-button:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -59,87 +80,133 @@
 
 <body class="flex flex-col h-screen">
 
-    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300 modal-inactive">
-        <div class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-2xl max-w-lg w-full text-white border-t-4 border-emerald-500">
-            <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-emerald-400"> ¡Armá tu Plancha! </h2>
+    <div id="tutorial-modal"
+        class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300 modal-inactive">
+        <div
+            class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-2xl max-w-lg w-full text-white border-t-4 border-emerald-500">
+            <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-emerald-400"> ¡Armá tu Plancha!
+            </h2>
             <p class="text-center text-gray-300 mb-6">Seguí estos pasos para diseñar tus stickers:</p>
             <ol class="list-decimal list-inside space-y-4 text-left text-gray-200">
-                <li><strong class="font-semibold text-emerald-400">Elegí tus Imágenes:</strong> Usá la "Galería" o subí tus propias fotos con el botón "Subir Imágenes".</li>
-                <li><strong class="font-semibold text-emerald-400">Diseñá a tu Gusto:</strong> Arrastrá las imágenes a la plancha. Podés moverlas, cambiarles el tamaño y ordenarlas como quieras.</li>
-                <li><strong class="font-semibold text-emerald-400">Descargá y Envía:</strong> Al terminar, tocá "Descargar y Enviar". Tu diseño se baja y te llevamos a WhatsApp para que nos lo pases.</li>
+                <li><strong class="font-semibold text-emerald-400">Elegí tus Imágenes:</strong> Usá la "Galería"
+                    o subí tus propias fotos con el botón "Subir Imágenes".</li>
+                <li><strong class="font-semibold text-emerald-400">Diseñá a tu Gusto:</strong> Arrastrá las
+                    imágenes a la plancha. Podés moverlas, cambiarles el tamaño y ordenarlas como quieras.</li>
+                <li><strong class="font-semibold text-emerald-400">Descargá y Envía:</strong> Al terminar, tocá
+                    "Descargar y Enviar". Tu diseño se baja y te llevamos a WhatsApp para que nos lo pases.</li>
             </ol>
             <button id="close-tutorial-btn" class="mt-8 w-full action-button">¡Entendido, a stickear!</button>
         </div>
     </div>
 
-    <div id="message-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 modal-inactive p-4">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center border-t-4 border-emerald-500">
+    <div id="message-modal"
+        class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 modal-inactive p-4">
+        <div
+            class="bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center border-t-4 border-emerald-500">
             <p id="modal-message" class="text-lg font-semibold text-white mb-4"></p>
             <div id="modal-buttons" class="flex flex-col gap-2">
-                 <button onclick="hideModal()" class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition font-semibold">Cerrar</button>
+                <button onclick="hideModal()"
+                    class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition font-semibold">Cerrar</button>
             </div>
         </div>
     </div>
 
-    <header class="flex items-center justify-between bg-gray-900/80 backdrop-blur-sm text-white px-4 py-3 shadow-lg border-b-2 border-emerald-500">
+    <header
+        class="flex items-center justify-between bg-gray-900/80 backdrop-blur-sm text-white px-4 py-3 shadow-lg border-b-2 border-emerald-500">
         <div class="flex items-center space-x-3">
-            <img src="logo.png" alt="STICKEAME Logo" class="h-10 w-auto rounded-full border-2 border-emerald-500">
+            <img src="logo.png" alt="STICKEAME Logo"
+                class="h-10 w-auto rounded-full border-2 border-emerald-500">
             <span class="font-graffiti text-2xl select-none text-emerald-400">STICKEAME</span>
         </div>
         <nav class="flex items-center space-x-3">
-            <a href="https://drive.google.com/drive/folders/1ZeBNXXJZZ4RfSIYu_DnhULqT3hNFUrs5" target="_blank" rel="noopener noreferrer" class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600">
+            <a href="https://drive.google.com/drive/folders/1ZeBNXXJZZ4RfSIYu_DnhULqT3hNFUrs5" target="_blank"
+                rel="noopener noreferrer"
+                class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600">
                 <i class="fa-solid fa-folder-open"></i> <span>Galería</span>
             </a>
-            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded-lg bg-gradient-to-tr from-emerald-400 via-cyan-500 to-blue-600 text-white shadow-lg hover:scale-110 transition-transform duration-300 text-2xl">
+            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer"
+                aria-label="Instagram"
+                class="p-3 rounded-lg bg-gradient-to-tr from-emerald-400 via-cyan-500 to-blue-600 text-white shadow-lg hover:scale-110 transition-transform duration-300 text-2xl">
                 <i class="fa-brands fa-instagram"></i>
             </a>
         </nav>
     </header>
 
     <main class="flex flex-col flex-1 p-2 md:p-4">
-        <div class="flex-1 flex flex-col md:flex-row items-stretch bg-gray-800/50 rounded-lg shadow-inner overflow-hidden">
+        <div
+            class="flex-1 flex flex-col md:flex-row items-stretch bg-gray-800/50 rounded-lg shadow-inner overflow-hidden">
             <div id="canvas-container" class="flex-1 flex items-center justify-center p-4 w-full">
                 <canvas id="canvas" class="rounded-lg shadow-2xl shadow-black/50"></canvas>
             </div>
-            <div id="text-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
+
+            <div id="text-panel"
+                class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold text-emerald-400">Editar Texto</h2>
-                    <button id="close-panel" class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i class="fa-solid fa-xmark"></i></button>
+                    <button id="close-panel" class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i
+                            class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="flex flex-col space-y-2">
-                    <button id="fontBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-font"></i>Fuentes</button>
+                    <button id="fontBtn"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i
+                            class="fa-solid fa-font"></i>Fuentes</button>
                     <div id="font-options" class="hidden flex flex-col space-y-1 p-2 bg-gray-800 rounded-md">
-                        <button class="font-option text-left p-1 rounded hover:bg-gray-700" data-font="Inter">Inter</button>
-                        <button class="font-option text-left p-1 rounded hover:bg-gray-700" data-font="Arial">Arial</button>
-                        <button class="font-option text-left p-1 rounded hover:bg-gray-700" data-font="Permanent Marker">Permanent Marker</button>
+                        <button class="font-option text-left p-1 rounded hover:bg-gray-700"
+                            data-font="Inter">Inter</button>
+                        <button class="font-option text-left p-1 rounded hover:bg-gray-700"
+                            data-font="Arial">Arial</button>
+                        <button class="font-option text-left p-1 rounded hover:bg-gray-700"
+                            data-font="Permanent Marker">Permanent Marker</button>
                     </div>
-                    <button id="colorBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-palette"></i>Colores</button>
+                    <button id="colorBtn"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i
+                            class="fa-solid fa-palette"></i>Colores</button>
                     <div id="color-options" class="hidden grid grid-cols-5 gap-2 p-2 bg-gray-800 rounded-md">
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm border border-gray-500" style="background-color: #FFFFFF;" data-color="#FFFFFF"></div>
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #10B981;" data-color="#10B981"></div>
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #FF0000;" data-color="#FF0000"></div>
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #00FF00;" data-color="#00FF00"></div>
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #0000FF;" data-color="#0000FF"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm border border-gray-500"
+                            style="background-color: #FFFFFF;" data-color="#FFFFFF"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm"
+                            style="background-color: #10B981;" data-color="#10B981"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm"
+                            style="background-color: #FF0000;" data-color="#FF0000"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm"
+                            style="background-color: #00FF00;" data-color="#00FF00"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm"
+                            style="background-color: #0000FF;" data-color="#0000FF"></div>
                     </div>
-                    <button id="boldBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-bold"></i>Negrita</button>
-                    <button id="italicBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-italic"></i>Cursiva</button>
-                    <button id="underlineBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-underline"></i>Subrayado</button>
+                    <button id="boldBtn"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i
+                            class="fa-solid fa-bold"></i>Negrita</button>
+                    <button id="italicBtn"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i
+                            class="fa-solid fa-italic"></i>Cursiva</button>
+                    <button id="underlineBtn"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i
+                            class="fa-solid fa-underline"></i>Subrayado</button>
                 </div>
             </div>
-            <div id="layer-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
+
+            <div id="layer-panel"
+                class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold text-emerald-400">Capas</h2>
-                    <button id="close-layer-panel" class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i class="fa-solid fa-xmark"></i></button>
+                    <button id="close-layer-panel"
+                        class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i
+                            class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="flex flex-col space-y-2">
-                    <button id="bringForwardBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-up"></i>Adelante</button>
-                    <button id="sendBackwardBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-down"></i>Atrás</button>
+                    <button id="bringForwardBtn"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i
+                            class="fa-solid fa-arrow-up"></i>Adelante</button>
+                    <button id="sendBackwardBtn"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i
+                            class="fa-solid fa-arrow-down"></i>Atrás</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="grid grid-cols-2 md:grid-cols-5 gap-3 bg-gray-900/80 backdrop-blur-sm p-3 md:p-4 rounded-t-md border-t-2 border-emerald-500 shadow-inner">
+    <footer
+        class="grid grid-cols-2 md:grid-cols-5 gap-3 bg-gray-900/80 backdrop-blur-sm p-3 md:p-4 rounded-t-md border-t-2 border-emerald-500 shadow-inner">
         <button id="exportPdfBtn" class="action-button col-span-2 md:col-span-1" type="button">
             <i class="fa-brands fa-whatsapp"></i> Descargar y Enviar
         </button>
@@ -150,10 +217,12 @@
         <button id="addTextBtn" class="action-button" type="button">
             <i class="fa-solid fa-font"></i> Añadir Texto
         </button>
-        <button id="clearPageBtn" class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600" type="button">
+        <button id="clearPageBtn" class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600"
+            type="button">
             <i class="fa-solid fa-trash-can"></i> Limpiar
         </button>
-        <button id="deleteSelectionBtn" class="action-button bg-red-600 text-white hover:bg-red-500" type="button">
+        <button id="deleteSelectionBtn" class="action-button bg-red-600 text-white hover:bg-red-500"
+            type="button">
             <i class="fa-solid fa-times"></i> Eliminar
         </button>
     </footer>
@@ -165,13 +234,14 @@
             document.getElementById('message-modal').classList.add('modal-active');
             document.getElementById('message-modal').classList.remove('modal-inactive');
         }
+
         function hideModal() {
             document.getElementById('message-modal').classList.remove('modal-active');
             document.getElementById('message-modal').classList.add('modal-inactive');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Lógica del tutorial
+            // Lógica del tutorial (esto ya está perfecto)
             const tutorialModal = document.getElementById('tutorial-modal');
             const closeTutorialBtn = document.getElementById('close-tutorial-btn');
             const closeTutorial = () => {
@@ -179,11 +249,13 @@
                 tutorialModal.classList.add('modal-inactive');
                 localStorage.setItem('tutorialStickeameMostrado', 'true');
             };
+
             if (!localStorage.getItem('tutorialStickeameMostrado')) {
                 tutorialModal.classList.add('modal-active');
                 tutorialModal.classList.remove('modal-inactive');
             }
             closeTutorialBtn.addEventListener('click', closeTutorial);
+
 
             // Constantes
             const A4_ASPECT_RATIO = 210 / 297;
@@ -208,10 +280,8 @@
                 const containerWidth = canvasContainer.clientWidth - 32;
                 const containerHeight = canvasContainer.clientHeight - 32;
                 const containerAspectRatio = containerWidth / containerHeight;
-
                 let newWidth = (containerAspectRatio > A4_ASPECT_RATIO) ? containerHeight * A4_ASPECT_RATIO : containerWidth;
                 let newHeight = (containerAspectRatio > A4_ASPECT_RATIO) ? containerHeight : newWidth / A4_ASPECT_RATIO;
-
                 canvas.setDimensions({ width: newWidth, height: newHeight });
                 canvas.setZoom(newWidth / EXPORT_WIDTH_PX);
                 canvas.renderAll();
@@ -219,8 +289,8 @@
 
             function addImageToCanvas(url) {
                 fabric.Image.fromURL(url, (img) => {
-                    // ✅ CORREGIDO: El tamaño inicial ahora es el 50% del ancho del lienzo
-                    img.scaleToWidth(canvas.getWidth() * 0.5); 
+                    // <-- CORRECCIÓN AQUÍ: Ajustado el tamaño inicial de la imagen a un 40% del ancho del lienzo.
+                    img.scaleToWidth(canvas.getWidth() * 0.4); 
                     img.set({
                         left: canvas.getWidth() / 2,
                         top: canvas.getHeight() / 2,
@@ -243,7 +313,7 @@
 
             document.getElementById('clearPageBtn').addEventListener('click', () => {
                 canvas.getObjects().forEach(obj => {
-                    if(obj !== canvas.backgroundImage) { canvas.remove(obj) }
+                    if (obj !== canvas.backgroundImage) { canvas.remove(obj) }
                 });
                 canvas.renderAll();
             });
@@ -259,7 +329,7 @@
                     top: canvas.getHeight() / 2,
                     originX: 'center',
                     originY: 'center',
-                    // ✅ CORREGIDO: El tamaño de la fuente ahora es mucho más razonable
+                    // <-- CORRECCIÓN AQUÍ: Ajustado el tamaño inicial de la fuente a un valor mucho más razonable.
                     fontSize: Math.round(canvas.getHeight() / 15), 
                     fontFamily: 'Permanent Marker',
                     fill: '#000000',
@@ -271,28 +341,23 @@
             document.getElementById('exportPdfBtn').addEventListener('click', async () => {
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({ unit: "mm", format: "a4" });
-
                 showModal("Exportando tu obra de arte...");
-
                 const { width, height, zoom } = canvas;
                 try {
-                    canvas.discardActiveObject();
+                    canvas.discardActiveObject(); // Deseleccionar para que no se vea el recuadro
                     canvas.setDimensions({ width: EXPORT_WIDTH_PX, height: EXPORT_HEIGHT_PX });
                     canvas.setZoom(1);
                     canvas.renderAll();
-                    
                     const imgData = canvas.toDataURL({ format: 'jpeg', quality: 1.0, backgroundColor: '#FFFFFF' });
                     pdf.addImage(imgData, "JPEG", 0, 0, A4_WIDTH_MM, A4_HEIGHT_MM);
                     pdf.save("diseno-stickeame.pdf");
-                    
                     hideModal();
                     showModal('¡Diseño descargado!<br>Ahora, envialo por WhatsApp.',
-                        `<a href="https://wa.me/543755298440?text=${encodeURIComponent('¡Hola! Te paso mi diseño de STICKEAME para el pedido.')}" target="_blank" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition shadow-md text-center inline-block w-full">
+                        `<a href="https://wa.me/543755298440?text=${encodeURIComponent('¡Hola! Te paso mi diseño de STICKEAME para el pedido.')}" target="_blank" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition shadow-md text-center inline-block">
                             <i class="fa-brands fa-whatsapp mr-2"></i>Enviar por WhatsApp
-                        </a>
-                        <button onclick="hideModal()" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-600 transition shadow-md mt-2 w-full">Cerrar</button>`
+                         </a>
+                         <button onclick="hideModal()" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-600 transition shadow-md mt-2">Cerrar</button>`
                     );
-
                 } catch (e) {
                     showModal("Hubo un error al generar el PDF. Intentalo de nuevo.");
                 } finally {
@@ -326,13 +391,18 @@
             // Lógica de botones de edición de texto
             const applyStyle = (prop, value) => {
                 const obj = canvas.getActiveObject();
-                if (obj && obj.type === 'i-text') { obj.set(prop, value); canvas.renderAll(); }
+                if (obj && obj.type === 'i-text') {
+                    obj.set(prop, value);
+                    canvas.renderAll();
+                }
             };
             const toggleStyle = (prop, val1, val2) => {
                 const obj = canvas.getActiveObject();
-                if (obj && obj.type === 'i-text') { obj.set(prop, obj[prop] === val1 ? val2 : val1); canvas.renderAll(); }
+                if (obj && obj.type === 'i-text') {
+                    obj.set(prop, obj[prop] === val1 ? val2 : val1);
+                    canvas.renderAll();
+                }
             };
-
             document.getElementById('fontBtn').addEventListener('click', () => { fontOptions.classList.toggle('hidden'); colorOptions.classList.add('hidden'); });
             document.getElementById('colorBtn').addEventListener('click', () => { colorOptions.classList.toggle('hidden'); fontOptions.classList.add('hidden'); });
             document.getElementById('boldBtn').addEventListener('click', () => toggleStyle('fontWeight', 'bold', 'normal'));
@@ -350,5 +420,7 @@
             window.addEventListener('resize', resizeCanvas);
         });
     </script>
+
 </body>
+
 </html>

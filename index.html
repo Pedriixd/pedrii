@@ -74,7 +74,7 @@
 <body class="flex flex-col h-screen">
 
     <!-- MODAL DE TUTORIAL (ADAPTADO AL NUEVO ESTILO) -->
-    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300 modal-active">
+    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300 modal-inactive">
         <div class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-2xl max-w-lg w-full text-white border-t-4 border-emerald-500">
             <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-emerald-400">
                 ¡Armá tu Plancha!
@@ -379,22 +379,36 @@
                 var obj = e.target;
                 obj.setCoords();
                 
-                var bound = obj.getBoundingRect(true, true);
+                // Si el objeto es más grande que el canvas, permitimos que se mueva libremente
+                // para evitar que se quede atascado.
+                if (obj.getScaledHeight() > canvas.getHeight() || obj.getScaledWidth() > canvas.getWidth()) {
+                    return;
+                }
+
+                var bound = obj.getBoundingRect();
+                var objWidth = bound.width;
+                var objHeight = bound.height;
 
                 var canvasWidth = canvas.getWidth();
                 var canvasHeight = canvas.getHeight();
+                
+                // Límites para la esquina superior izquierda del objeto
+                var leftBound = 0;
+                var topBound = 0;
+                var rightBound = canvasWidth - objWidth;
+                var bottomBound = canvasHeight - objHeight;
 
-                if (bound.left < 0) {
-                    obj.left = obj.left - bound.left;
+                if (bound.left < leftBound) {
+                    obj.left = leftBound + objWidth / 2 - (obj.left - bound.left);
                 }
-                if (bound.top < 0) {
-                    obj.top = obj.top - bound.top;
+                if (bound.top < topBound) {
+                    obj.top = topBound + objHeight / 2 - (obj.top - bound.top);
                 }
-                if (bound.left + bound.width > canvasWidth) {
-                    obj.left = canvasWidth - bound.width + obj.left - bound.left;
+                if (bound.left + objWidth > canvasWidth) {
+                    obj.left = rightBound + objWidth / 2 - (obj.left - bound.left);
                 }
-                if (bound.top + bound.height > canvasHeight) {
-                    obj.top = canvasHeight - bound.height + obj.top - bound.top;
+                if (bound.top + objHeight > canvasHeight) {
+                    obj.top = bottomBound + objHeight / 2 - (obj.top - bound.top);
                 }
             });
 

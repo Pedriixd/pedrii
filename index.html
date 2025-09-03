@@ -7,13 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" xintegrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLPD7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    <!-- NUEVAS FUENTES ESTILO GRAFFITI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
-
+    
     <style>
         /* ESTILOS BASE Y NUEVA ESTÉTICA */
         :root {
@@ -22,36 +21,22 @@
             --color-accent: #10B981; /* Un verde esmeralda fachero */
             --color-dark: #1a1a1a;
         }
-
-        body { 
+        body {
             font-family: var(--font-body);
             background-color: var(--color-dark);
             /* Textura de fondo sutil */
             background-image: url('https://www.transparenttextures.com/patterns/concrete-wall-3.png');
             color: #f1f1f1;
         }
-
-        .font-graffiti {
-            font-family: var(--font-graffiti);
-        }
-
-        .modal {
-            transition: opacity 0.3s ease-in-out;
-        }
-        .modal-active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal-inactive {
-            opacity: 0;
-            pointer-events: none;
-        }
-
+        .font-graffiti { font-family: var(--font-graffiti); }
+        .modal { transition: opacity 0.3s ease-in-out; }
+        .modal-active { opacity: 1; pointer-events: auto; }
+        .modal-inactive { opacity: 0; pointer-events: none; }
         /* ESTILO PERSONALIZADO PARA BOTONES DE ACCIÓN */
         .action-button {
             font-family: var(--font-graffiti);
             background-color: var(--color-accent);
-            color: #fff; /* Cambiado a blanco para mejor contraste con verde */
+            color: #fff;
             text-transform: uppercase;
             padding: 8px 12px;
             border-radius: 6px;
@@ -71,14 +56,12 @@
         }
     </style>
 </head>
+
 <body class="flex flex-col h-screen">
 
-    <!-- MODAL DE TUTORIAL (ADAPTADO AL NUEVO ESTILO) -->
     <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300 modal-inactive">
         <div class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-2xl max-w-lg w-full text-white border-t-4 border-emerald-500">
-            <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-emerald-400">
-                ¡Armá tu Plancha!
-            </h2>
+            <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-emerald-400"> ¡Armá tu Plancha! </h2>
             <p class="text-center text-gray-300 mb-6">Seguí estos pasos para diseñar tus stickers:</p>
             <ol class="list-decimal list-inside space-y-4 text-left text-gray-200">
                 <li><strong class="font-semibold text-emerald-400">Elegí tus Imágenes:</strong> Usá la "Galería" o subí tus propias fotos con el botón "Subir Imágenes".</li>
@@ -89,17 +72,15 @@
         </div>
     </div>
 
-    <!-- Modal para mensajes (adaptado) -->
     <div id="message-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 modal-inactive p-4">
         <div class="bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center border-t-4 border-emerald-500">
             <p id="modal-message" class="text-lg font-semibold text-white mb-4"></p>
             <div id="modal-buttons" class="flex flex-col gap-2">
-                <button onclick="hideModal()" class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition font-semibold">Cerrar</button>
+                 <button onclick="hideModal()" class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition font-semibold">Cerrar</button>
             </div>
         </div>
     </div>
 
-    <!-- ENCABEZADO CON NUEVO ESTILO -->
     <header class="flex items-center justify-between bg-gray-900/80 backdrop-blur-sm text-white px-4 py-3 shadow-lg border-b-2 border-emerald-500">
         <div class="flex items-center space-x-3">
             <img src="logo.png" alt="STICKEAME Logo" class="h-10 w-auto rounded-full border-2 border-emerald-500">
@@ -107,8 +88,7 @@
         </div>
         <nav class="flex items-center space-x-3">
             <a href="https://drive.google.com/drive/folders/1ZeBNXXJZZ4RfSIYu_DnhULqT3hNFUrs5" target="_blank" rel="noopener noreferrer" class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600">
-                <i class="fa-solid fa-folder-open"></i>
-                <span>Galería</span>
+                <i class="fa-solid fa-folder-open"></i> <span>Galería</span>
             </a>
             <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded-lg bg-gradient-to-tr from-emerald-400 via-cyan-500 to-blue-600 text-white shadow-lg hover:scale-110 transition-transform duration-300 text-2xl">
                 <i class="fa-brands fa-instagram"></i>
@@ -117,13 +97,10 @@
     </header>
 
     <main class="flex flex-col flex-1 p-2 md:p-4">
-        <!-- Editor principal -->
         <div class="flex-1 flex flex-col md:flex-row items-stretch bg-gray-800/50 rounded-lg shadow-inner overflow-hidden">
             <div id="canvas-container" class="flex-1 flex items-center justify-center p-4 w-full">
                 <canvas id="canvas" class="rounded-lg shadow-2xl shadow-black/50"></canvas>
             </div>
-
-            <!-- Panel de opciones para texto -->
             <div id="text-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold text-emerald-400">Editar Texto</h2>
@@ -149,8 +126,6 @@
                     <button id="underlineBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-underline"></i>Subrayado</button>
                 </div>
             </div>
-
-            <!-- Panel de opciones para capas -->
             <div id="layer-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold text-emerald-400">Capas</h2>
@@ -164,28 +139,22 @@
         </div>
     </main>
 
-    <!-- FOOTER CON BOTONES DE ACCIÓN RESTAURADOS Y CON NUEVO ESTILO -->
     <footer class="grid grid-cols-2 md:grid-cols-5 gap-3 bg-gray-900/80 backdrop-blur-sm p-3 md:p-4 rounded-t-md border-t-2 border-emerald-500 shadow-inner">
         <button id="exportPdfBtn" class="action-button col-span-2 md:col-span-1" type="button">
-            <i class="fa-brands fa-whatsapp"></i>
-            Descargar y Enviar
+            <i class="fa-brands fa-whatsapp"></i> Descargar y Enviar
         </button>
         <label for="upload-images" class="action-button">
-            <i class="fa-solid fa-image"></i>
-            Subir Imágenes
+            <i class="fa-solid fa-image"></i> Subir Imágenes
             <input id="upload-images" type="file" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
         </label>
         <button id="addTextBtn" class="action-button" type="button">
-            <i class="fa-solid fa-font"></i>
-            Añadir Texto
+            <i class="fa-solid fa-font"></i> Añadir Texto
         </button>
         <button id="clearPageBtn" class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600" type="button">
-            <i class="fa-solid fa-trash-can"></i>
-            Limpiar
+            <i class="fa-solid fa-trash-can"></i> Limpiar
         </button>
         <button id="deleteSelectionBtn" class="action-button bg-red-600 text-white hover:bg-red-500" type="button">
-            <i class="fa-solid fa-times"></i>
-            Eliminar
+            <i class="fa-solid fa-times"></i> Eliminar
         </button>
     </footer>
 
@@ -196,7 +165,6 @@
             document.getElementById('message-modal').classList.add('modal-active');
             document.getElementById('message-modal').classList.remove('modal-inactive');
         }
-
         function hideModal() {
             document.getElementById('message-modal').classList.remove('modal-active');
             document.getElementById('message-modal').classList.add('modal-inactive');
@@ -240,8 +208,10 @@
                 const containerWidth = canvasContainer.clientWidth - 32;
                 const containerHeight = canvasContainer.clientHeight - 32;
                 const containerAspectRatio = containerWidth / containerHeight;
+
                 let newWidth = (containerAspectRatio > A4_ASPECT_RATIO) ? containerHeight * A4_ASPECT_RATIO : containerWidth;
                 let newHeight = (containerAspectRatio > A4_ASPECT_RATIO) ? containerHeight : newWidth / A4_ASPECT_RATIO;
+
                 canvas.setDimensions({ width: newWidth, height: newHeight });
                 canvas.setZoom(newWidth / EXPORT_WIDTH_PX);
                 canvas.renderAll();
@@ -249,13 +219,19 @@
 
             function addImageToCanvas(url) {
                 fabric.Image.fromURL(url, (img) => {
-                    img.scaleToWidth(canvas.getWidth() * 3.5); // <--- TAMAÑO DE IMAGEN GIGANTE
-                    img.set({ left: canvas.getWidth() / 2, top: canvas.getHeight() / 2, originX: 'center', originY: 'center' });
+                    // ✅ CORREGIDO: El tamaño inicial ahora es el 50% del ancho del lienzo
+                    img.scaleToWidth(canvas.getWidth() * 0.5); 
+                    img.set({
+                        left: canvas.getWidth() / 2,
+                        top: canvas.getHeight() / 2,
+                        originX: 'center',
+                        originY: 'center'
+                    });
                     canvas.add(img);
                     canvas.setActiveObject(img);
                 });
             }
-            
+
             // Event Listeners Principales
             document.getElementById('upload-images').addEventListener('change', (e) => {
                 Array.from(e.target.files).forEach(file => {
@@ -266,8 +242,10 @@
             });
 
             document.getElementById('clearPageBtn').addEventListener('click', () => {
-                 canvas.getObjects().forEach(obj => { if(obj !== canvas.backgroundImage) { canvas.remove(obj) }});
-                 canvas.renderAll();
+                canvas.getObjects().forEach(obj => {
+                    if(obj !== canvas.backgroundImage) { canvas.remove(obj) }
+                });
+                canvas.renderAll();
             });
 
             document.getElementById('deleteSelectionBtn').addEventListener('click', () => {
@@ -277,10 +255,14 @@
 
             document.getElementById('addTextBtn').addEventListener('click', () => {
                 const text = new fabric.IText('EDITAME', {
-                    left: canvas.getWidth() / 2, top: canvas.getHeight() / 2,
-                    originX: 'center', originY: 'center',
-                    fontSize: Math.round(canvas.getHeight() * 1.5), // <--- TAMAÑO DE TEXTO GIGANTE
-                    fontFamily: 'Permanent Marker', fill: '#000000',
+                    left: canvas.getWidth() / 2,
+                    top: canvas.getHeight() / 2,
+                    originX: 'center',
+                    originY: 'center',
+                    // ✅ CORREGIDO: El tamaño de la fuente ahora es mucho más razonable
+                    fontSize: Math.round(canvas.getHeight() / 15), 
+                    fontFamily: 'Permanent Marker',
+                    fill: '#000000',
                 });
                 canvas.add(text);
                 canvas.setActiveObject(text);
@@ -289,23 +271,28 @@
             document.getElementById('exportPdfBtn').addEventListener('click', async () => {
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({ unit: "mm", format: "a4" });
+
                 showModal("Exportando tu obra de arte...");
+
                 const { width, height, zoom } = canvas;
                 try {
-                    canvas.discardActiveObject(); // Deseleccionar para que no se vea el recuadro
+                    canvas.discardActiveObject();
                     canvas.setDimensions({ width: EXPORT_WIDTH_PX, height: EXPORT_HEIGHT_PX });
                     canvas.setZoom(1);
                     canvas.renderAll();
+                    
                     const imgData = canvas.toDataURL({ format: 'jpeg', quality: 1.0, backgroundColor: '#FFFFFF' });
                     pdf.addImage(imgData, "JPEG", 0, 0, A4_WIDTH_MM, A4_HEIGHT_MM);
                     pdf.save("diseno-stickeame.pdf");
+                    
                     hideModal();
                     showModal('¡Diseño descargado!<br>Ahora, envialo por WhatsApp.',
-                        `<a href="https://wa.me/543755298440?text=${encodeURIComponent('¡Hola! Te paso mi diseño de STICKEAME para el pedido.')}" target="_blank" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition shadow-md text-center inline-block">
+                        `<a href="https://wa.me/543755298440?text=${encodeURIComponent('¡Hola! Te paso mi diseño de STICKEAME para el pedido.')}" target="_blank" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition shadow-md text-center inline-block w-full">
                             <i class="fa-brands fa-whatsapp mr-2"></i>Enviar por WhatsApp
                         </a>
-                        <button onclick="hideModal()" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-600 transition shadow-md mt-2">Cerrar</button>`
+                        <button onclick="hideModal()" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-600 transition shadow-md mt-2 w-full">Cerrar</button>`
                     );
+
                 } catch (e) {
                     showModal("Hubo un error al generar el PDF. Intentalo de nuevo.");
                 } finally {
@@ -320,17 +307,21 @@
                 const activeObject = obj || canvas.getActiveObject();
                 const isText = activeObject && activeObject.type === 'i-text';
                 const isImage = activeObject && activeObject.isType('image');
-
                 textPanel.classList.toggle('hidden', !isText);
                 layerPanel.classList.toggle('hidden', !isImage);
             }
-
             canvas.on('selection:created', (e) => togglePanels(e.target));
             canvas.on('selection:updated', (e) => togglePanels(e.target));
             canvas.on('selection:cleared', () => togglePanels(null));
 
-            document.getElementById('close-panel').addEventListener('click', () => { textPanel.classList.add('hidden'); canvas.discardActiveObject().renderAll(); });
-            document.getElementById('close-layer-panel').addEventListener('click', () => { layerPanel.classList.add('hidden'); canvas.discardActiveObject().renderAll(); });
+            document.getElementById('close-panel').addEventListener('click', () => {
+                textPanel.classList.add('hidden');
+                canvas.discardActiveObject().renderAll();
+            });
+            document.getElementById('close-layer-panel').addEventListener('click', () => {
+                layerPanel.classList.add('hidden');
+                canvas.discardActiveObject().renderAll();
+            });
 
             // Lógica de botones de edición de texto
             const applyStyle = (prop, value) => {
@@ -344,24 +335,16 @@
 
             document.getElementById('fontBtn').addEventListener('click', () => { fontOptions.classList.toggle('hidden'); colorOptions.classList.add('hidden'); });
             document.getElementById('colorBtn').addEventListener('click', () => { colorOptions.classList.toggle('hidden'); fontOptions.classList.add('hidden'); });
-            
             document.getElementById('boldBtn').addEventListener('click', () => toggleStyle('fontWeight', 'bold', 'normal'));
             document.getElementById('italicBtn').addEventListener('click', () => toggleStyle('fontStyle', 'italic', 'normal'));
             document.getElementById('underlineBtn').addEventListener('click', () => toggleStyle('underline', true, false));
-
-            document.querySelectorAll('.font-option').forEach(btn => btn.addEventListener('click', (e) => {
-                applyStyle('fontFamily', e.target.dataset.font);
-                fontOptions.classList.add('hidden');
-            }));
-            document.querySelectorAll('.color-swatch').forEach(sw => sw.addEventListener('click', (e) => {
-                applyStyle('fill', e.target.dataset.color);
-                colorOptions.classList.add('hidden');
-            }));
+            document.querySelectorAll('.font-option').forEach(btn => btn.addEventListener('click', (e) => { applyStyle('fontFamily', e.target.dataset.font); fontOptions.classList.add('hidden'); }));
+            document.querySelectorAll('.color-swatch').forEach(sw => sw.addEventListener('click', (e) => { applyStyle('fill', e.target.dataset.color); colorOptions.classList.add('hidden'); }));
 
             // Lógica de botones de capas
             document.getElementById('bringForwardBtn').addEventListener('click', () => { if (canvas.getActiveObject()) { canvas.bringForward(canvas.getActiveObject()); canvas.renderAll(); } });
             document.getElementById('sendBackwardBtn').addEventListener('click', () => { if (canvas.getActiveObject()) { canvas.sendBackwards(canvas.getActiveObject()); canvas.renderAll(); } });
-            
+
             // Inicialización
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
@@ -369,4 +352,3 @@
     </script>
 </body>
 </html>
-

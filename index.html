@@ -247,7 +247,7 @@
 
             function addImageToCanvas(url) {
                 fabric.Image.fromURL(url, (img) => {
-                    img.scaleToWidth(canvas.getWidth() / 2);
+                    img.scaleToWidth(canvas.getWidth() * 0.6); // <--- TAMAÑO DE IMAGEN AJUSTADO
                     img.set({ left: canvas.getWidth() / 2, top: canvas.getHeight() / 2, originX: 'center', originY: 'center' });
                     canvas.add(img);
                     canvas.setActiveObject(img);
@@ -277,7 +277,7 @@
                 const text = new fabric.IText('EDITAME', {
                     left: canvas.getWidth() / 2, top: canvas.getHeight() / 2,
                     originX: 'center', originY: 'center',
-                    fontSize: Math.round(canvas.getWidth() * 0.2),
+                    fontSize: Math.round(canvas.getWidth() * 0.4), // <--- TAMAÑO DE TEXTO AJUSTADO
                     fontFamily: 'Permanent Marker', fill: '#000000',
                 });
                 canvas.add(text);

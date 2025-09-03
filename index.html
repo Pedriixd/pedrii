@@ -7,8 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" xintegrity="sha512-z3gLPD7yG52hLdFj9yP4vI7zC3pW6hS5F5E5M5Q5S5C5S5L5N5T5R5E5I5G5A5P5C5Q5U5Y5D5R5C5R5S5N5G5I5T5A5K5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5a5b5c5d5e5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z5A5B5C5D5E5F5G5H5I5J5K5L5M5N5O5P5Q5R5S5T5U5V5W5X5Y5Z5p6" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
+    <!-- NUEVAS FUENTES ESTILO GRAFFITI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -18,9 +19,8 @@
         :root {
             --font-graffiti: 'Permanent Marker', cursive;
             --font-body: 'Inter', sans-serif;
-            --color-accent: #FFD300; /* Un amarillo vibrante */
+            --color-accent: #10B981; /* Un verde esmeralda fachero */
             --color-dark: #1a1a1a;
-            --color-dark-secondary: #2a2a2a;
         }
 
         body { 
@@ -36,7 +36,7 @@
         }
 
         .modal {
-            transition: all 0.3s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
         }
         .modal-active {
             opacity: 1;
@@ -51,7 +51,7 @@
         .action-button {
             font-family: var(--font-graffiti);
             background-color: var(--color-accent);
-            color: #000;
+            color: #fff; /* Cambiado a blanco para mejor contraste con verde */
             text-transform: uppercase;
             padding: 8px 12px;
             border-radius: 6px;
@@ -62,98 +62,112 @@
             justify-content: center;
             gap: 0.5rem; /* 8px */
             cursor: pointer;
+            border: 2px solid transparent;
         }
         .action-button:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
             filter: brightness(1.1);
         }
     </style>
 </head>
 <body class="flex flex-col h-screen">
 
-    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 p-4 transition-opacity duration-300">
-        <div class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-2xl max-w-lg w-full text-white border-t-4 border-yellow-400">
-            <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-yellow-400">
+    <!-- MODAL DE TUTORIAL (ADAPTADO AL NUEVO ESTILO) -->
+    <div id="tutorial-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 p-4 transition-opacity duration-300">
+        <div class="bg-gray-800 p-6 md:p-8 rounded-lg shadow-2xl max-w-lg w-full text-white border-t-4 border-emerald-500">
+            <h2 class="font-graffiti text-3xl md:text-4xl text-center mb-4 text-emerald-400">
                 ¡Armá tu Plancha!
             </h2>
             <p class="text-center text-gray-300 mb-6">Seguí estos pasos para diseñar tus stickers:</p>
             <ol class="list-decimal list-inside space-y-4 text-left text-gray-200">
-                <li><strong class="font-semibold text-yellow-400">Elegí tus Imágenes:</strong> Usá la "Galería" o subí tus propias fotos con el botón "Subir Imágenes".</li>
-                <li><strong class="font-semibold text-yellow-400">Diseñá a tu Gusto:</strong> Arrastrá las imágenes a la plancha. Podés moverlas, cambiarles el tamaño y ordenarlas como quieras.</li>
-                <li><strong class="font-semibold text-yellow-400">Descargá y Envía:</strong> Al terminar, tocá "Descargar y Enviar". Tu diseño se baja y te llevamos a WhatsApp para que nos lo pases.</li>
+                <li><strong class="font-semibold text-emerald-400">Elegí tus Imágenes:</strong> Usá la "Galería" o subí tus propias fotos con el botón "Subir Imágenes".</li>
+                <li><strong class="font-semibold text-emerald-400">Diseñá a tu Gusto:</strong> Arrastrá las imágenes a la plancha. Podés moverlas, cambiarles el tamaño y ordenarlas como quieras.</li>
+                <li><strong class="font-semibold text-emerald-400">Descargá y Envía:</strong> Al terminar, tocá "Descargar y Enviar". Tu diseño se baja y te llevamos a WhatsApp para que nos lo pases.</li>
             </ol>
-            <button id="close-tutorial-btn" class="mt-8 w-full action-button">¡Entendido, a rockear!</button>
+            <button id="close-tutorial-btn" class="mt-8 w-full action-button">¡Entendido, a stickear!</button>
         </div>
     </div>
 
+    <!-- Modal para mensajes (adaptado) -->
     <div id="message-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 modal-inactive p-4">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center border-t-4 border-yellow-400">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center border-t-4 border-emerald-500">
             <p id="modal-message" class="text-lg font-semibold text-white mb-4"></p>
             <div id="modal-buttons" class="flex flex-col gap-2">
-                <button onclick="hideModal()" class="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-500 transition font-semibold">Cerrar</button>
+                <button onclick="hideModal()" class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition font-semibold">Cerrar</button>
             </div>
         </div>
     </div>
 
-    <header class="flex items-center justify-between bg-gray-900/80 backdrop-blur-sm text-white px-4 py-3 shadow-lg border-b-2 border-yellow-400">
+    <!-- ENCABEZADO CON NUEVO ESTILO -->
+    <header class="flex items-center justify-between bg-gray-900/80 backdrop-blur-sm text-white px-4 py-3 shadow-lg border-b-2 border-emerald-500">
         <div class="flex items-center space-x-3">
-            <img src="logo.png" alt="STICKEAME Logo" class="h-10 w-auto rounded-full border-2 border-yellow-400">
-            <span class="font-graffiti text-2xl select-none text-yellow-400">STICKEAME</span>
+            <img src="logo.png" alt="STICKEAME Logo" class="h-10 w-auto rounded-full border-2 border-emerald-500">
+            <span class="font-graffiti text-2xl select-none text-emerald-400">STICKEAME</span>
         </div>
         <nav class="flex items-center space-x-3">
-            <a href="https://drive.google.com/drive/folders/1ZeBNXXJZZ4RfSIYu_DnhULqT3hNFUrs5" target="_blank" rel="noopener noreferrer" class="action-button bg-gray-700 text-yellow-400 hover:bg-gray-600">
+            <a href="https://drive.google.com/drive/folders/1ZeBNXXJZZ4RfSIYu_DnhULqT3hNFUrs5" target="_blank" rel="noopener noreferrer" class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600">
                 <i class="fa-solid fa-folder-open"></i>
                 <span>Galería</span>
             </a>
-            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white shadow-lg hover:scale-110 transition-transform duration-300 text-2xl">
+            <a href="https://www.instagram.com/pedriixd.alvez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-3 rounded-lg bg-gradient-to-tr from-emerald-400 via-cyan-500 to-blue-600 text-white shadow-lg hover:scale-110 transition-transform duration-300 text-2xl">
                 <i class="fa-brands fa-instagram"></i>
             </a>
         </nav>
     </header>
 
     <main class="flex flex-col flex-1 p-2 md:p-4">
+        <!-- Editor principal -->
         <div class="flex-1 flex flex-col md:flex-row items-stretch bg-gray-800/50 rounded-lg shadow-inner overflow-hidden">
             <div id="canvas-container" class="flex-1 flex items-center justify-center p-4 w-full">
                 <canvas id="canvas" class="rounded-lg shadow-2xl shadow-black/50"></canvas>
             </div>
 
-            <div id="text-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-yellow-400 bg-gray-900/80 rounded-r-lg">
-                <div class="flex justify-between items-center mb-4"><h2 class="text-lg font-semibold text-yellow-400">Editar Texto</h2><button id="close-panel" class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i class="fa-solid fa-xmark"></i></button></div>
+            <!-- Panel de opciones para texto -->
+            <div id="text-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-emerald-400">Editar Texto</h2>
+                    <button id="close-panel" class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i class="fa-solid fa-xmark"></i></button>
+                </div>
                 <div class="flex flex-col space-y-2">
-                    <button id="fontBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition"><i class="fa-solid fa-font mr-2"></i>Fuentes</button>
+                    <button id="fontBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-font"></i>Fuentes</button>
                     <div id="font-options" class="hidden flex flex-col space-y-1 p-2 bg-gray-800 rounded-md">
                         <button class="font-option text-left p-1 rounded hover:bg-gray-700" data-font="Inter">Inter</button>
                         <button class="font-option text-left p-1 rounded hover:bg-gray-700" data-font="Arial">Arial</button>
-                        <button class="font-option text-left p-1 rounded hover:bg-gray-700" data-font="Times New Roman">Times New Roman</button>
                         <button class="font-option text-left p-1 rounded hover:bg-gray-700" data-font="Permanent Marker">Permanent Marker</button>
                     </div>
-                    <button id="colorBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition"><i class="fa-solid fa-palette mr-2"></i>Colores</button>
+                    <button id="colorBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-palette"></i>Colores</button>
                     <div id="color-options" class="hidden grid grid-cols-5 gap-2 p-2 bg-gray-800 rounded-md">
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #FFFFFF;" data-color="#FFFFFF"></div>
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #FFD300;" data-color="#FFD300"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm border border-gray-500" style="background-color: #FFFFFF;" data-color="#FFFFFF"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #10B981;" data-color="#10B981"></div>
                         <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #FF0000;" data-color="#FF0000"></div>
-                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #008000;" data-color="#008000"></div>
+                        <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #00FF00;" data-color="#00FF00"></div>
                         <div class="color-swatch w-6 h-6 rounded-full cursor-pointer shadow-sm" style="background-color: #0000FF;" data-color="#0000FF"></div>
                     </div>
-                    <button id="boldBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition"><i class="fa-solid fa-bold mr-2"></i>Negrita</button>
-                    <button id="italicBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition"><i class="fa-solid fa-italic mr-2"></i>Cursiva</button>
-                    <button id="underlineBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition"><i class="fa-solid fa-underline mr-2"></i>Subrayado</button>
+                    <button id="boldBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-bold"></i>Negrita</button>
+                    <button id="italicBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-italic"></i>Cursiva</button>
+                    <button id="underlineBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-underline"></i>Subrayado</button>
                 </div>
             </div>
-            <div id="layer-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-yellow-400 bg-gray-900/80 rounded-r-lg">
-                <div class="flex justify-between items-center mb-4"><h2 class="text-lg font-semibold text-yellow-400">Capas de Imagen</h2><button id="close-layer-panel" class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i class="fa-solid fa-xmark"></i></button></div>
+
+            <!-- Panel de opciones para capas -->
+            <div id="layer-panel" class="hidden flex-shrink-0 w-full md:w-64 p-4 border-l-2 border-emerald-500 bg-gray-900/80">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-emerald-400">Capas</h2>
+                    <button id="close-layer-panel" class="p-1 rounded-full text-gray-400 hover:bg-gray-700"><i class="fa-solid fa-xmark"></i></button>
+                </div>
                 <div class="flex flex-col space-y-2">
-                    <button id="bringForwardBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition"><i class="fa-solid fa-arrow-up-long mr-2"></i>Subir capa</button>
-                    <button id="sendBackwardBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition"><i class="fa-solid fa-arrow-down-long mr-2"></i>Bajar capa</button>
+                    <button id="bringForwardBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-up"></i>Adelante</button>
+                    <button id="sendBackwardBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm border border-gray-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-down"></i>Atrás</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="grid grid-cols-2 md:grid-cols-5 gap-3 bg-gray-900/80 backdrop-blur-sm p-3 md:p-4 rounded-t-md border-t-2 border-yellow-400 shadow-inner">
-        <button id="exportPdfBtn" class="action-button" type="button">
-            <i class="fa-solid fa-download"></i>
+    <!-- FOOTER CON BOTONES DE ACCIÓN RESTAURADOS Y CON NUEVO ESTILO -->
+    <footer class="grid grid-cols-2 md:grid-cols-5 gap-3 bg-gray-900/80 backdrop-blur-sm p-3 md:p-4 rounded-t-md border-t-2 border-emerald-500 shadow-inner">
+        <button id="exportPdfBtn" class="action-button col-span-2 md:col-span-1" type="button">
+            <i class="fa-brands fa-whatsapp"></i>
             Descargar y Enviar
         </button>
         <label for="upload-images" class="action-button">
@@ -165,9 +179,9 @@
             <i class="fa-solid fa-font"></i>
             Añadir Texto
         </button>
-        <button id="clearPageBtn" class="action-button bg-gray-700 text-yellow-400 hover:bg-gray-600" type="button">
+        <button id="clearPageBtn" class="action-button bg-gray-700 text-emerald-400 hover:bg-gray-600" type="button">
             <i class="fa-solid fa-trash-can"></i>
-            Limpiar Página
+            Limpiar
         </button>
         <button id="deleteSelectionBtn" class="action-button bg-red-600 text-white hover:bg-red-500" type="button">
             <i class="fa-solid fa-times"></i>
@@ -176,24 +190,20 @@
     </footer>
 
     <script>
-        // La lógica de JavaScript no necesita cambios, por lo que se mantiene igual.
-        function showModal(message, buttonsHtml = '<button onclick="hideModal()" class="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-500 transition font-semibold">Cerrar</button>') {
-            const modal = document.getElementById('message-modal');
-            const modalMessage = document.getElementById('modal-message');
-            const modalButtons = document.getElementById('modal-buttons');
-            modalMessage.innerHTML = message;
-            modalButtons.innerHTML = buttonsHtml;
-            modal.classList.add('modal-active');
-            modal.classList.remove('modal-inactive');
+        function showModal(message, buttonsHtml = '<button onclick="hideModal()" class="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition font-semibold">Cerrar</button>') {
+            document.getElementById('modal-message').innerHTML = message;
+            document.getElementById('modal-buttons').innerHTML = buttonsHtml;
+            document.getElementById('message-modal').classList.add('modal-active');
+            document.getElementById('message-modal').classList.remove('modal-inactive');
         }
 
         function hideModal() {
-            const modal = document.getElementById('message-modal');
-            modal.classList.remove('modal-active');
-            modal.classList.add('modal-inactive');
+            document.getElementById('message-modal').classList.remove('modal-active');
+            document.getElementById('message-modal').classList.add('modal-inactive');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Lógica del tutorial
             const tutorialModal = document.getElementById('tutorial-modal');
             const closeTutorialBtn = document.getElementById('close-tutorial-btn');
             const closeTutorial = () => {
@@ -205,91 +215,46 @@
             }
             closeTutorialBtn.addEventListener('click', closeTutorial);
 
+            // Constantes
             const A4_ASPECT_RATIO = 210 / 297;
             const A4_WIDTH_MM = 210;
             const A4_HEIGHT_MM = 297;
             const DPI = 300;
-            const MM_IN_INCH = 25.4;
-            const EXPORT_WIDTH_PX = Math.round((A4_WIDTH_MM * DPI) / MM_IN_INCH);
-            const EXPORT_HEIGHT_PX = Math.round((A4_HEIGHT_MM * DPI) / MM_IN_INCH);
+            const EXPORT_WIDTH_PX = Math.round((A4_WIDTH_MM * DPI) / 25.4);
+            const EXPORT_HEIGHT_PX = Math.round((A4_HEIGHT_MM * DPI) / 25.4);
 
-            let canvas, pages = [], currentPageIndex = 0;
+            // Elementos del DOM
             const canvasContainer = document.getElementById('canvas-container');
-            const addTextBtn = document.getElementById('addTextBtn');
             const textPanel = document.getElementById('text-panel');
-            const closeTextPanelBtn = document.getElementById('close-panel');
             const layerPanel = document.getElementById('layer-panel');
-            const closeLayerPanelBtn = document.getElementById('close-layer-panel');
-            const bringForwardBtn = document.getElementById('bringForwardBtn');
-            const sendBackwardBtn = document.getElementById('sendBackwardBtn');
-
-            const fontBtn = document.getElementById('fontBtn');
             const fontOptions = document.getElementById('font-options');
-            const colorBtn = document.getElementById('colorBtn');
             const colorOptions = document.getElementById('color-options');
-            const boldBtn = document.getElementById('boldBtn');
-            const italicBtn = document.getElementById('italicBtn');
-            const underlineBtn = document.getElementById('underlineBtn');
 
-            canvas = new fabric.Canvas('canvas');
-            let dimensionText = null;
-
+            // Inicialización de Fabric.js
+            const canvas = new fabric.Canvas('canvas');
             canvas.setBackgroundColor('#FFFFFF', canvas.renderAll.bind(canvas));
 
             function resizeCanvas() {
-                const containerWidth = canvasContainer.clientWidth - 32; // Restar padding
-                const containerHeight = canvasContainer.clientHeight - 32; // Restar padding
-                let newWidth, newHeight;
+                const containerWidth = canvasContainer.clientWidth - 32;
+                const containerHeight = canvasContainer.clientHeight - 32;
                 const containerAspectRatio = containerWidth / containerHeight;
-                if (containerAspectRatio > A4_ASPECT_RATIO) {
-                    newHeight = containerHeight;
-                    newWidth = newHeight * A4_ASPECT_RATIO;
-                } else {
-                    newWidth = containerWidth;
-                    newHeight = newWidth / A4_ASPECT_RATIO;
-                }
+                let newWidth = (containerAspectRatio > A4_ASPECT_RATIO) ? containerHeight * A4_ASPECT_RATIO : containerWidth;
+                let newHeight = (containerAspectRatio > A4_ASPECT_RATIO) ? containerHeight : newWidth / A4_ASPECT_RATIO;
                 canvas.setDimensions({ width: newWidth, height: newHeight });
                 canvas.setZoom(newWidth / EXPORT_WIDTH_PX);
                 canvas.renderAll();
             }
 
-            function renderCurrentPage() {
-                if (pages.length === 0) {
-                    pages.push({ id: crypto.randomUUID(), objects: [] });
-                    currentPageIndex = 0;
-                }
-                canvas.clear();
-                const whiteBackground = new fabric.Rect({
-                    left: 0, top: 0, fill: '#FFFFFF',
-                    width: EXPORT_WIDTH_PX, height: EXPORT_HEIGHT_PX,
-                    selectable: false, evented: false, excludeFromExport: true
-                });
-                canvas.add(whiteBackground);
-                canvas.sendToBack(whiteBackground);
-                const page = pages[currentPageIndex];
-                if (page.objects && page.objects.length > 0) {
-                    fabric.util.enlivenObjects(page.objects, (objs) => {
-                        canvas.add(...objs);
-                        canvas.renderAll();
-                    });
-                }
-                resizeCanvas();
-            }
-
             function addImageToCanvas(url) {
                 fabric.Image.fromURL(url, (img) => {
-                    img.scaleToWidth(canvas.getWidth() / 2); // Escala inicial más manejable
-                    img.set({
-                        left: canvas.getWidth() / 2, top: canvas.getHeight() / 2,
-                        originX: 'center', originY: 'center',
-                    });
+                    img.scaleToWidth(canvas.getWidth() / 2);
+                    img.set({ left: canvas.getWidth() / 2, top: canvas.getHeight() / 2, originX: 'center', originY: 'center' });
                     canvas.add(img);
                     canvas.setActiveObject(img);
-                    canvas.renderAll();
-                    pages[currentPageIndex].objects = canvas.toJSON().objects;
                 });
             }
-
+            
+            // Event Listeners Principales
             document.getElementById('upload-images').addEventListener('change', (e) => {
                 Array.from(e.target.files).forEach(file => {
                     const reader = new FileReader();
@@ -299,50 +264,37 @@
             });
 
             document.getElementById('clearPageBtn').addEventListener('click', () => {
-                canvas.clear();
-                const whiteBackground = new fabric.Rect({
-                    left: 0, top: 0, fill: '#FFFFFF',
-                    width: EXPORT_WIDTH_PX, height: EXPORT_HEIGHT_PX,
-                    selectable: false, evented: false, excludeFromExport: true
-                });
-                canvas.add(whiteBackground);
-                canvas.sendToBack(whiteBackground);
-                pages[currentPageIndex].objects = [];
-                canvas.renderAll();
+                 canvas.getObjects().forEach(obj => { if(obj !== canvas.backgroundImage) { canvas.remove(obj) }});
+                 canvas.renderAll();
             });
 
             document.getElementById('deleteSelectionBtn').addEventListener('click', () => {
-                canvas.remove(...canvas.getActiveObjects());
-                canvas.renderAll();
+                canvas.getActiveObjects().forEach(obj => canvas.remove(obj));
+                canvas.discardActiveObject().renderAll();
             });
 
-            addTextBtn.addEventListener('click', () => {
+            document.getElementById('addTextBtn').addEventListener('click', () => {
                 const text = new fabric.IText('EDITAME', {
                     left: canvas.getWidth() / 2, top: canvas.getHeight() / 2,
                     originX: 'center', originY: 'center',
                     fontSize: Math.round(canvas.getWidth() * 0.2),
-                    fontFamily: 'Permanent Marker', fill: '#000',
+                    fontFamily: 'Permanent Marker', fill: '#000000',
                 });
                 canvas.add(text);
                 canvas.setActiveObject(text);
-                canvas.renderAll();
-                togglePanels(text);
             });
 
             document.getElementById('exportPdfBtn').addEventListener('click', async () => {
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({ unit: "mm", format: "a4" });
                 showModal("Exportando tu obra de arte...");
-                const originalWidth = canvas.getWidth();
-                const originalHeight = canvas.getHeight();
-                const originalZoom = canvas.getZoom();
+                const { width, height, zoom } = canvas;
                 try {
+                    canvas.discardActiveObject(); // Deseleccionar para que no se vea el recuadro
                     canvas.setDimensions({ width: EXPORT_WIDTH_PX, height: EXPORT_HEIGHT_PX });
                     canvas.setZoom(1);
                     canvas.renderAll();
-                    const imgData = canvas.toDataURL({
-                        format: 'jpeg', quality: 1.0, multiplier: 1, backgroundColor: '#FFFFFF'
-                    });
+                    const imgData = canvas.toDataURL({ format: 'jpeg', quality: 1.0, backgroundColor: '#FFFFFF' });
                     pdf.addImage(imgData, "JPEG", 0, 0, A4_WIDTH_MM, A4_HEIGHT_MM);
                     pdf.save("diseno-stickeame.pdf");
                     hideModal();
@@ -354,90 +306,65 @@
                     );
                 } catch (e) {
                     showModal("Hubo un error al generar el PDF. Intentalo de nuevo.");
-                    console.error("PDF generation error:", e);
                 } finally {
-                    canvas.setDimensions({ width: originalWidth, height: originalHeight });
-                    canvas.setZoom(originalZoom);
+                    canvas.setDimensions({ width, height });
+                    canvas.setZoom(zoom);
                     canvas.renderAll();
                 }
             });
 
-            const updateState = () => { pages[currentPageIndex].objects = canvas.toJSON().objects; };
-            canvas.on('object:modified', updateState);
-            canvas.on('object:added', updateState);
-            canvas.on('object:removed', updateState);
-
-            function showDimensionText(obj) { /* Sin cambios */ }
-            function updateDimensionTextPosition(obj) { /* Sin cambios */ }
-            function hideDimensionText() { /* Sin cambios */ }
-            
-            canvas.on({
-                'object:scaling': (e) => showDimensionText(e.target),
-                'object:moving': (e) => showDimensionText(e.target),
-                'mouse:down': (e) => { if (!e.target || e.target.type !== 'image') hideDimensionText(); },
-                'object:modified': hideDimensionText,
-                'selection:cleared': hideDimensionText,
-                'object:removed': hideDimensionText
-            });
-
+            // Lógica de Paneles Laterales
             function togglePanels(obj) {
-                textPanel.classList.add('hidden');
-                layerPanel.classList.add('hidden');
-                fontOptions.classList.add('hidden');
-                colorOptions.classList.add('hidden');
-                hideDimensionText();
-                if (obj) {
-                    if (obj.type === 'i-text') textPanel.classList.remove('hidden');
-                    else if (obj.type === 'image') layerPanel.classList.remove('hidden');
-                }
+                const activeObject = obj || canvas.getActiveObject();
+                const isText = activeObject && activeObject.type === 'i-text';
+                const isImage = activeObject && activeObject.isType('image');
+
+                textPanel.classList.toggle('hidden', !isText);
+                layerPanel.classList.toggle('hidden', !isImage);
             }
-            
+
             canvas.on('selection:created', (e) => togglePanels(e.target));
             canvas.on('selection:updated', (e) => togglePanels(e.target));
             canvas.on('selection:cleared', () => togglePanels(null));
 
-            closeTextPanelBtn.addEventListener('click', () => { textPanel.classList.add('hidden'); canvas.discardActiveObject().renderAll(); });
-            closeLayerPanelBtn.addEventListener('click', () => { layerPanel.classList.add('hidden'); canvas.discardActiveObject().renderAll(); });
+            document.getElementById('close-panel').addEventListener('click', () => { textPanel.classList.add('hidden'); canvas.discardActiveObject().renderAll(); });
+            document.getElementById('close-layer-panel').addEventListener('click', () => { layerPanel.classList.add('hidden'); canvas.discardActiveObject().renderAll(); });
 
-            // Lógica de paneles de edición (sin cambios funcionales)
-            fontBtn.addEventListener('click', () => { fontOptions.classList.toggle('hidden'); colorOptions.classList.add('hidden'); });
-            colorBtn.addEventListener('click', () => { colorOptions.classList.toggle('hidden'); fontOptions.classList.add('hidden'); });
-
-            const applyTextStyle = (prop, value, toggleValue) => {
-                const activeObject = canvas.getActiveObject();
-                if (activeObject && active-object.type === 'i-text') {
-                    const isToggle = activeObject[prop] === value;
-                    activeObject.set(prop, isToggle ? toggleValue : value);
-                    canvas.renderAll();
-                }
+            // Lógica de botones de edición de texto
+            const applyStyle = (prop, value) => {
+                const obj = canvas.getActiveObject();
+                if (obj && obj.type === 'i-text') { obj.set(prop, value); canvas.renderAll(); }
             };
-            boldBtn.addEventListener('click', () => applyTextStyle('fontWeight', 'bold', 'normal'));
-            italicBtn.addEventListener('click', () => applyTextStyle('fontStyle', 'italic', 'normal'));
-            underlineBtn.addEventListener('click', () => applyTextStyle('underline', true, false));
+            const toggleStyle = (prop, val1, val2) => {
+                const obj = canvas.getActiveObject();
+                if (obj && obj.type === 'i-text') { obj.set(prop, obj[prop] === val1 ? val2 : val1); canvas.renderAll(); }
+            };
+
+            document.getElementById('fontBtn').addEventListener('click', () => { fontOptions.classList.toggle('hidden'); colorOptions.classList.add('hidden'); });
+            document.getElementById('colorBtn').addEventListener('click', () => { colorOptions.classList.toggle('hidden'); fontOptions.classList.add('hidden'); });
             
-            document.querySelectorAll('.font-option').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const fontName = e.target.dataset.font;
-                    applyTextStyle('fontFamily', fontName);
-                    fontOptions.classList.add('hidden');
-                });
-            });
+            document.getElementById('boldBtn').addEventListener('click', () => toggleStyle('fontWeight', 'bold', 'normal'));
+            document.getElementById('italicBtn').addEventListener('click', () => toggleStyle('fontStyle', 'italic', 'normal'));
+            document.getElementById('underlineBtn').addEventListener('click', () => toggleStyle('underline', true, false));
 
-            document.querySelectorAll('.color-swatch').forEach(swatch => {
-                swatch.addEventListener('click', (e) => {
-                    applyTextStyle('fill', e.target.dataset.color);
-                    colorOptions.classList.add('hidden');
-                });
-            });
+            document.querySelectorAll('.font-option').forEach(btn => btn.addEventListener('click', (e) => {
+                applyStyle('fontFamily', e.target.dataset.font);
+                fontOptions.classList.add('hidden');
+            }));
+            document.querySelectorAll('.color-swatch').forEach(sw => sw.addEventListener('click', (e) => {
+                applyStyle('fill', e.target.dataset.color);
+                colorOptions.classList.add('hidden');
+            }));
 
-            bringForwardBtn.addEventListener('click', () => { if (canvas.getActiveObject()) canvas.getActiveObject().bringForward(); canvas.renderAll(); });
-            sendBackwardBtn.addEventListener('click', () => { if (canvas.getActiveObject()) canvas.getActiveObject().sendBackward(); canvas.renderAll(); });
-
-            pages = [{ id: crypto.randomUUID(), objects: [] }];
+            // Lógica de botones de capas
+            document.getElementById('bringForwardBtn').addEventListener('click', () => { if (canvas.getActiveObject()) { canvas.bringForward(canvas.getActiveObject()); canvas.renderAll(); } });
+            document.getElementById('sendBackwardBtn').addEventListener('click', () => { if (canvas.getActiveObject()) { canvas.sendBackwards(canvas.getActiveObject()); canvas.renderAll(); } });
+            
+            // Inicialización
             resizeCanvas();
-            renderCurrentPage();
             window.addEventListener('resize', resizeCanvas);
         });
     </script>
 </body>
 </html>
+
